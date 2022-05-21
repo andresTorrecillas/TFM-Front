@@ -55,7 +55,6 @@ export class HttpService {
 
   private resetOptions(): void {
     this.params = new HttpParams();
-    this.headers = new HttpHeaders();
   }
 
   private static extractResponseBody(response: any): any{
