@@ -12,6 +12,9 @@ import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {AppRoutingModule} from "./app-routing.module";
+import {HttpService} from "./shared/services/http.service";
+
+
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import {AppRoutingModule} from "./app-routing.module";
     MatInputModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
+// @ts-ignore
 export class AppModule { }
