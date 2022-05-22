@@ -17,12 +17,14 @@ export class SongComponent implements OnInit {
   public dialog: MatDialog;
   private route: ActivatedRoute;
   private httpService: HttpService;
+  private id: Number;
   public song: Song;
 
   constructor(dialog: MatDialog, route: ActivatedRoute, httpService: HttpService) {
     this.dialog = dialog;
     this.route = route;
     this.song = {title:"", lyrics:""};
+    this.id = 0;
     this.httpService = httpService;
   }
 
@@ -39,9 +41,21 @@ export class SongComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.song.title = params['title'];
+      this.id = params['id']??0;
     });
-    //this.httpService.get(SongComponent.END_POINT + 'id=' + )
+    this.httpService
+      .get(SongComponent.END_POINT + "/" + this.id)
+      .subscribe({
+          next: (body: Song) => {
+            this.song.title = body.title;
+            this.song.lyrics = body.lyrics;
+            //console.log(this.song);
+          },
+          error: error => {
+            this.song.title = "ERROR";
+            console.log(error);
+          },
+        });
   }
 }
 

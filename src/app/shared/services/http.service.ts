@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, EMPTY, map, Observable} from "rxjs";
+import {catchError, map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ export class HttpService {
       .get(path, this.createOptions())
       .pipe(
         map(HttpService.extractResponseBody),
-        catchError(error => {console.log(error); return EMPTY})
+        catchError(HttpService.handleError)
       );
   }
 
@@ -38,7 +38,7 @@ export class HttpService {
       .post(path, body, this.createOptions())
       .pipe(
         map(HttpService.extractResponseBody),
-        catchError(error => {console.log(error); return EMPTY})
+        catchError(HttpService.handleError)
       );
   }
 
@@ -55,11 +55,18 @@ export class HttpService {
 
   private resetOptions(): void {
     this.params = new HttpParams();
-    this.headers = new HttpHeaders();
   }
 
   private static extractResponseBody(response: any): any{
+    //console.log(response.body);
     return response.body;
+  }
+
+  private static handleError(error: any){
+    console.log(error)
+    return new Observable(subscriber => {
+      subscriber.error(error.error);
+    });
   }
 
 }
