@@ -13,6 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpService} from "./shared/services/http.service";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -22,16 +23,17 @@ import {HttpService} from "./shared/services/http.service";
     SongComponent,
     AddSongDialogComponent
   ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule
-  ],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule
+    ],
   providers: [HttpService],
   bootstrap: [AppComponent]
 })

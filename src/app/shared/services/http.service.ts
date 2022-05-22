@@ -58,7 +58,7 @@ export class HttpService {
   }
 
   private static extractResponseBody(response: any): any{
-    console.log(response.body);
+    //console.log(response.body);
     return response.body;
   }
 

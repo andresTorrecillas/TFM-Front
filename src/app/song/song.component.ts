@@ -44,13 +44,12 @@ export class SongComponent implements OnInit {
       this.id = params['id']??0;
     });
     this.httpService
-      .param("id",this.id.toString())
-      .get(SongComponent.END_POINT)
+      .get(SongComponent.END_POINT + "/" + this.id)
       .subscribe({
           next: (body: Song) => {
             this.song.title = body.title;
             this.song.lyrics = body.lyrics;
-            console.log(this.song);
+            //console.log(this.song);
           },
           error: error => {
             this.song.title = "ERROR";
