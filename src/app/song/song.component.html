@@ -1,7 +1,12 @@
 <mat-card>
-  <mat-card-header>
+  <mat-card-content>
     <mat-card-title>
       <h1>{{this.song.title}}</h1>
     </mat-card-title>
-  </mat-card-header>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-content *ngIf="isLyricsSet()">
+    <p>{{this.song.lyrics}}</p>
+  </mat-card-content>
 </mat-card>

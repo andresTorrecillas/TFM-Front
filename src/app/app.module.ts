@@ -16,8 +16,7 @@ import {HttpService} from "./shared/services/http.service";
 import {MatCardModule} from "@angular/material/card";
 import {SongListComponent} from "./song/song-list/song-list.component";
 import {MatIconModule} from "@angular/material/icon";
-
-
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -36,7 +35,8 @@ import {MatIconModule} from "@angular/material/icon";
     MatButtonModule,
     MatCardModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

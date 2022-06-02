@@ -35,13 +35,16 @@ export class SongComponent implements OnInit {
           next: (body: Song) => {
             this.song.title = body.title;
             this.song.lyrics = body.lyrics;
-            //console.log(this.song);
           },
           error: error => {
             this.song.title = "ERROR";
             console.log(error);
           },
         });
+  }
+
+  isLyricsSet(): boolean{
+    return this.song.lyrics !== null && this.song.lyrics !== "";
   }
 }
 

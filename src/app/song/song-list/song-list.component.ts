@@ -4,6 +4,8 @@ import {HttpService} from "../../shared/services/http.service";
 import {Song} from "../Song.model";
 import {EndPoints} from "../../shared/end-points";
 import {AddSongDialogComponent} from "../add-song-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-song-list',
@@ -15,10 +17,12 @@ export class SongListComponent implements OnInit {
   public dialog: MatDialog;
   private httpService: HttpService;
   public songList: Array<Song>;
+  private snackBar: MatSnackBar;
 
-  constructor(dialog:MatDialog, httpService:HttpService) {
+  constructor(dialog:MatDialog, httpService:HttpService, snackBar: MatSnackBar) {
     this.dialog = dialog;
     this.httpService = httpService;
+    this.snackBar = snackBar;
     this.songList = [];
   }
 
@@ -43,7 +47,21 @@ export class SongListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.httpService.post(EndPoints.SONG, result)
+        .subscribe({
+          next: () => {
+            this.openSnackbar("La canción se guardó correctamente");
+            this.songList.push(result);
+          },
+          error: error => this.openSnackbar(error)
+        });
     });
   }
+
+  openSnackbar(message: string, duration: number = environment.NOTIFICATION_DURATION): void{
+    this.snackBar.open(message, "Close",{
+      duration: duration * 1000,
+    });
+  }
+
 }
