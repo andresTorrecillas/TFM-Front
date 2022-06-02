@@ -12,7 +12,7 @@ export class AddSongDialogComponent {
   private dialogRef: MatDialogRef<AddSongDialogComponent>;
   song: Song;
   constructor(dialogRef: MatDialogRef<AddSongDialogComponent>) {
-    this.song = {title:"", lyrics:""};
+    this.song = {id:0, title:"", lyrics:""};
     this.dialogRef = dialogRef;
   }
 

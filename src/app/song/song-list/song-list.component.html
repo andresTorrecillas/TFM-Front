@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-header>
+    <h1>Songs</h1>
+    <button mat-icon-button (click)="openDialog()">
+      <mat-icon>playlist_add</mat-icon>
+    </button>
+  </mat-card-header>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+    <p *ngFor="let song of songList; let i = index">
+      <mat-card>
+        <a routerLink="{{song.id}}">{{song.title}}</a>
+      </mat-card>
+    </p>
+  </mat-card-content>
+</mat-card>

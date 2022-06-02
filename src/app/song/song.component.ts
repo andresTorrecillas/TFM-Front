@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {Song} from "./Song.model";
-import {AddSongDialogComponent} from "./add-song-dialog.component";
 import { ActivatedRoute } from '@angular/router';
 import {HttpService} from "../shared/services/http.service";
 import {environment} from "../../environments/environment";
@@ -17,45 +16,35 @@ export class SongComponent implements OnInit {
   public dialog: MatDialog;
   private route: ActivatedRoute;
   private httpService: HttpService;
-  private id: Number;
+
   public song: Song;
 
   constructor(dialog: MatDialog, route: ActivatedRoute, httpService: HttpService) {
     this.dialog = dialog;
     this.route = route;
-    this.song = {title:"", lyrics:""};
-    this.id = 0;
+    this.song = {id:0, title:"", lyrics:""};
     this.httpService = httpService;
   }
 
-  openDialog(): void{
-    const dialogRef = this.dialog.open(AddSongDialogComponent, {
-      width: '250px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.song = result;
-    });
-  }
-
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.id = params['id']??0;
-    });
+    const id = this.route.snapshot.paramMap.get('id')??"";
+
     this.httpService
-      .get(SongComponent.END_POINT + "/" + this.id)
+      .get(SongComponent.END_POINT + "/" + id)
       .subscribe({
           next: (body: Song) => {
             this.song.title = body.title;
             this.song.lyrics = body.lyrics;
-            //console.log(this.song);
           },
           error: error => {
             this.song.title = "ERROR";
             console.log(error);
           },
         });
+  }
+
+  isLyricsSet(): boolean{
+    return this.song.lyrics !== null && this.song.lyrics !== "";
   }
 }
 

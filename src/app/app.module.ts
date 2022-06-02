@@ -14,26 +14,30 @@ import {MatButtonModule} from "@angular/material/button";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpService} from "./shared/services/http.service";
 import {MatCardModule} from "@angular/material/card";
-
-
+import {SongListComponent} from "./song/song-list/song-list.component";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
     AppComponent,
     SongComponent,
+    SongListComponent,
     AddSongDialogComponent
   ],
-    imports: [
-        AppRoutingModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        FormsModule,
-        MatInputModule,
-        MatButtonModule,
-        MatCardModule
-    ],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    FormsModule,
+    MatIconModule,
+    MatSnackBarModule
+  ],
   providers: [HttpService],
   bootstrap: [AppComponent]
 })
