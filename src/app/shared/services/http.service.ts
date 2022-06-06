@@ -42,6 +42,11 @@ export class HttpService {
       );
   }
 
+  delete(path: string): Observable<any>{
+    return this.http
+      .delete(path, this.createOptions());
+  }
+
   private createOptions(): any {
     const options: any = {
       headers: this.headers,
@@ -68,5 +73,6 @@ export class HttpService {
       subscriber.error(error.error);
     });
   }
+
 
 }

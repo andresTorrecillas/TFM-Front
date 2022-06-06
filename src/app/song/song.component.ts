@@ -22,7 +22,7 @@ export class SongComponent implements OnInit {
   constructor(dialog: MatDialog, route: ActivatedRoute, httpService: HttpService) {
     this.dialog = dialog;
     this.route = route;
-    this.song = {id:0, title:"", lyrics:""};
+    this.song = {id:"", title:"", lyrics:""};
     this.httpService = httpService;
   }
 
