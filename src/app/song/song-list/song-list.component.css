@@ -6,3 +6,22 @@ a{
 a:hover{
   color: #000000;
 }
+
+.deleteIcon{
+  position: absolute;
+  top: 0.7em;
+  right: 2vw;
+}
+
+.deleteIcon:hover{
+  cursor: pointer;
+}
+
+.individual-song{
+  margin-bottom: 1vh;
+}
+
+.main-content{
+  width: 95vw;
+  margin: auto;
+}

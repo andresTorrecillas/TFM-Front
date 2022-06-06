@@ -6,6 +6,7 @@ import {EndPoints} from "../../shared/end-points";
 import {AddSongDialogComponent} from "../add-song-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../environments/environment";
+import {ConfirmDialogComponent} from "../../shared/components/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-song-list',
@@ -32,12 +33,39 @@ export class SongListComponent implements OnInit {
       .subscribe({
         next: (body: Array<Song>) => {
           this.songList = body;
-          //console.log(this.song);
+          console.log(this.songList);
         },
         error: error => {
           console.log(error);
         },
       });
+  }
+
+  onDeleteSong(id: string): void{
+    this.dialog.open(ConfirmDialogComponent)
+      .afterClosed()
+      .subscribe(confirmation => {
+        if(confirmation){
+          this.deleteSong(id);
+        }
+      })
+  }
+
+  private deleteSong(id: string){
+    this.httpService.delete(EndPoints.SONG + "/" + id)
+      .subscribe(
+        {
+          next: () => {
+            this.openSnackbar("Se ha eliminado la canción correctamente");
+            this.songList.forEach((song, index) => {
+              if(song.id == id){
+                this.songList.splice(index, 1);
+              }
+            })
+          },
+          error: () => this.openSnackbar("Error, no se ha podido eliminar la canción")
+        }
+      );
   }
 
   openDialog(): void{

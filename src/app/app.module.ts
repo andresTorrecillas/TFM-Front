@@ -17,13 +17,15 @@ import {MatCardModule} from "@angular/material/card";
 import {SongListComponent} from "./song/song-list/song-list.component";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {ConfirmDialogComponent} from "./shared/components/confirm-dialog/confirm-dialog.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     SongComponent,
     SongListComponent,
-    AddSongDialogComponent
+    AddSongDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     AppRoutingModule,
