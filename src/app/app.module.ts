@@ -6,7 +6,7 @@ import {SongComponent} from "./song/song.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatDialogModule} from '@angular/material/dialog';
-import {AddSongDialogComponent} from "./song/add-song-dialog.component";
+import {AddUpdateSongDialogComponent} from "./song/add-update-song-dialog.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
@@ -18,13 +18,14 @@ import {SongListComponent} from "./song/song-list/song-list.component";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ConfirmDialogComponent} from "./shared/components/confirm-dialog/confirm-dialog.component";
+import {SnackbarService} from "./shared/services/snackbar.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     SongComponent,
     SongListComponent,
-    AddSongDialogComponent,
+    AddUpdateSongDialogComponent,
     ConfirmDialogComponent
   ],
   imports: [
@@ -40,7 +41,10 @@ import {ConfirmDialogComponent} from "./shared/components/confirm-dialog/confirm
     MatIconModule,
     MatSnackBarModule
   ],
-  providers: [HttpService],
+  providers: [
+    HttpService,
+    SnackbarService
+  ],
   bootstrap: [AppComponent]
 })
 // @ts-ignore

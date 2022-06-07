@@ -3,7 +3,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {HttpService} from "../../shared/services/http.service";
 import {Song} from "../Song.model";
 import {EndPoints} from "../../shared/end-points";
-import {AddSongDialogComponent} from "../add-song-dialog.component";
+import {AddUpdateSongDialogComponent} from "../add-update-song-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../environments/environment";
 import {ConfirmDialogComponent} from "../../shared/components/confirm-dialog/confirm-dialog.component";
@@ -69,7 +69,7 @@ export class SongListComponent implements OnInit {
   }
 
   openDialog(): void{
-    const dialogRef = this.dialog.open(AddSongDialogComponent, {
+    const dialogRef = this.dialog.open(AddUpdateSongDialogComponent, {
       width: '40vw',
       height: '80vh'
     });

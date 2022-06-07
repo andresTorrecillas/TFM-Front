@@ -4,6 +4,9 @@ import {Song} from "./Song.model";
 import { ActivatedRoute } from '@angular/router';
 import {HttpService} from "../shared/services/http.service";
 import {environment} from "../../environments/environment";
+import {AddUpdateSongDialogComponent} from "./add-update-song-dialog.component";
+import {EndPoints} from "../shared/end-points";
+import {SnackbarService} from "../shared/services/snackbar.service";
 
 @Component({
   selector: 'app-song',
@@ -18,10 +21,12 @@ export class SongComponent implements OnInit {
   private httpService: HttpService;
 
   public song: Song;
+  private snackBarService: SnackbarService;
 
-  constructor(dialog: MatDialog, route: ActivatedRoute, httpService: HttpService) {
+  constructor(dialog: MatDialog, route: ActivatedRoute, httpService: HttpService, snackBarService: SnackbarService) {
     this.dialog = dialog;
     this.route = route;
+    this.snackBarService = snackBarService;
     this.song = {id:"", title:"", lyrics:""};
     this.httpService = httpService;
   }
@@ -45,6 +50,28 @@ export class SongComponent implements OnInit {
 
   isLyricsSet(): boolean{
     return this.song.lyrics !== null && this.song.lyrics !== "";
+  }
+
+  openEditDialog(): void {
+    const dialogRef = this.dialog.open(AddUpdateSongDialogComponent, {
+      width: '40vw',
+      height: '80vh',
+      data: {
+        update: true,
+        song: this.song
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.httpService.patch(EndPoints.SONG + "/" + this.song.id, {lyrics: result})
+        .subscribe({
+          next: () => {
+            this.snackBarService.openSnackbar("La canción se guardó correctamente");
+            this.song.lyrics = result;
+          },
+          error: error => this.snackBarService.openSnackbar(error)
+        });
+    });
   }
 }
 
