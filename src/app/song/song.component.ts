@@ -38,6 +38,7 @@ export class SongComponent implements OnInit {
       .get(SongComponent.END_POINT + "/" + id)
       .subscribe({
           next: (body: Song) => {
+            this.song.id = body.id;
             this.song.title = body.title;
             this.song.lyrics = body.lyrics;
           },
@@ -63,13 +64,13 @@ export class SongComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.httpService.patch(EndPoints.SONG + "/" + this.song.id, {lyrics: result})
+      this.httpService.patch(EndPoints.SONG + "/" + this.song.id, {lyrics: result.lyrics})
         .subscribe({
           next: () => {
             this.snackBarService.openSnackbar("La canción se guardó correctamente");
-            this.song.lyrics = result;
+            this.song.lyrics = result.lyrics;
           },
-          error: error => this.snackBarService.openSnackbar(error)
+          error: () => this.snackBarService.openSnackbar("No se pudo actualizar la canción")
         });
     });
   }

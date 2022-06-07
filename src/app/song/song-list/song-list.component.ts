@@ -71,7 +71,11 @@ export class SongListComponent implements OnInit {
   openDialog(): void{
     const dialogRef = this.dialog.open(AddUpdateSongDialogComponent, {
       width: '40vw',
-      height: '80vh'
+      height: '80vh',
+      data: {
+        update: false,
+        song: null
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -81,7 +85,10 @@ export class SongListComponent implements OnInit {
             this.openSnackbar("La canción se guardó correctamente");
             this.songList.push(result);
           },
-          error: error => this.openSnackbar(error)
+          error: error => {
+            console.log(error);
+            this.openSnackbar(error[0].message);
+          }
         });
     });
   }
