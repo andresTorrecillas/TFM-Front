@@ -1,0 +1,23 @@
+<div class="container">
+  <mat-card class="form">
+    <mat-card-title class="text-center">Log In</mat-card-title>
+    <mat-card-content>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario</mat-label>
+          <input matNativeControl [(ngModel)]="login.userName" required #userName="ngModel"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matNativeControl [(ngModel)]="login.password" minlength="6" required type="password" #psw="ngModel"/>
+          <mat-error *ngIf="psw.invalid">La contrase&ntilde;a debe tener al menos 6 caracteres</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button (click)="sendLogin()" [disabled]="userName.invalid || psw.invalid">Log in</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

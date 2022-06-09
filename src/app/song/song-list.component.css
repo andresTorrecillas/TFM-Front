@@ -7,6 +7,15 @@ a:hover{
   color: #000000;
 }
 
+mat-card-header{
+  border-bottom: 2px solid #000000;
+  margin-bottom: 2vh;
+}
+
+h1{
+  margin-bottom: 5px;
+}
+
 .deleteIcon{
   position: absolute;
   top: 0.7em;
@@ -19,9 +28,4 @@ a:hover{
 
 .individual-song{
   margin-bottom: 1vh;
-}
-
-.main-content{
-  width: 95vw;
-  margin: auto;
 }

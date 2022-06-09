@@ -14,17 +14,19 @@ import {MatButtonModule} from "@angular/material/button";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpService} from "./shared/services/http.service";
 import {MatCardModule} from "@angular/material/card";
-import {SongListComponent} from "./song/song-list/song-list.component";
+import {SongListComponent} from "./song/song-list.component";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ConfirmDialogComponent} from "./shared/components/confirm-dialog/confirm-dialog.component";
 import {SnackbarService} from "./shared/services/snackbar.service";
+import {LogInComponent} from "./users/log-in.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     SongComponent,
     SongListComponent,
+    LogInComponent,
     AddUpdateSongDialogComponent,
     ConfirmDialogComponent
   ],

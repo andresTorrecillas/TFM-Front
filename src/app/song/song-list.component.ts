@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {HttpService} from "../../shared/services/http.service";
-import {Song} from "../Song.model";
-import {EndPoints} from "../../shared/end-points";
-import {AddUpdateSongDialogComponent} from "../add-update-song-dialog.component";
+import {HttpService} from "../shared/services/http.service";
+import {Song} from "./Song.model";
+import {EndPoints} from "../shared/end-points";
+import {AddUpdateSongDialogComponent} from "./add-update-song-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {environment} from "../../../environments/environment";
-import {ConfirmDialogComponent} from "../../shared/components/confirm-dialog/confirm-dialog.component";
+import {environment} from "../../environments/environment";
+import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-song-list',
