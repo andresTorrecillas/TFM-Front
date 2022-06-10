@@ -79,7 +79,11 @@ export class HttpService {
   private static handleError(error: any){
     console.log(error)
     return new Observable(subscriber => {
-      subscriber.error(error.error);
+      if(Array.isArray(error.error)){
+        subscriber.error(error.error[0].statusCode + " - " + error.error[0].message);
+      } else {
+        subscriber.error(error.status + " - Unhandled exception");
+      }
     });
   }
 

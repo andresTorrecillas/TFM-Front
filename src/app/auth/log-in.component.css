@@ -1,0 +1,20 @@
+.form{
+  position: relative;
+  top: 2vh;
+  margin: auto;
+  width: 30vw;
+}
+
+mat-form-field{
+  display: inline;
+}
+
+mat-card-title{
+  margin-bottom: 1em;
+}
+
+mat-card-footer{
+  padding: 5px;
+}
+
+
