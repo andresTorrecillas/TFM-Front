@@ -19,7 +19,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ConfirmDialogComponent} from "./shared/components/confirm-dialog/confirm-dialog.component";
 import {SnackbarService} from "./shared/services/snackbar.service";
-import {LogInComponent} from "./users/log-in.component";
+import {LogInComponent} from "./auth/log-in.component";
 
 @NgModule({
   declarations: [
