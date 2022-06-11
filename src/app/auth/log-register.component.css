@@ -3,6 +3,14 @@
   top: 2vh;
   margin: auto;
   width: 30vw;
+  min-width: 300px;
+}
+
+.inline{
+  width: 48%;
+}
+
+.container{
 }
 
 mat-form-field{

@@ -23,6 +23,7 @@ import {LogInComponent} from "./auth/log-in.component";
 import {AuthService} from "./auth/auth.service";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./shared/services/authInterceptor.service";
+import {RegisterComponent} from "./auth/register.component";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {AuthInterceptor} from "./shared/services/authInterceptor.service";
     SongListComponent,
     LogInComponent,
     AddUpdateSongDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    RegisterComponent
   ],
   imports: [
     AppRoutingModule,

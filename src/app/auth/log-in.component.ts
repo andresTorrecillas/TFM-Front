@@ -8,7 +8,7 @@ import {SnackbarService} from "../shared/services/snackbar.service";
 @Component({
   selector: 'app-login',
   templateUrl: 'log-in.component.html',
-  styleUrls: ["log-in.component.css"]
+  styleUrls: ["log-register.component.css"]
 })
 
 export class LogInComponent {

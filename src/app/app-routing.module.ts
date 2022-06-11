@@ -5,6 +5,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {SongListComponent} from "./song/song-list.component";
 import {LogInComponent} from "./auth/log-in.component";
 import {AuthGuard} from "./auth/auth.guard";
+import {RegisterComponent} from "./auth/register.component";
 
 const routes: Routes= [
   { path: 'song', canActivate: [AuthGuard], children:[
@@ -12,6 +13,7 @@ const routes: Routes= [
       { path:':id', component: SongComponent }
     ] },
   { path: 'login', component: LogInComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', redirectTo:'song', pathMatch: 'full' },
 ];
 

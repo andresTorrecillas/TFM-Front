@@ -1,0 +1,34 @@
+<div class="container">
+  <mat-card class="form">
+    <mat-card-title class="text-center">Register</mat-card-title>
+    <mat-card-content>
+      <div class="d-flex justify-content-between">
+        <mat-form-field appearance="outline" class="inline">
+          <mat-label>Usuario</mat-label>
+          <input matNativeControl [(ngModel)]="register.userName" required #userName="ngModel"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="inline">
+          <mat-label>Nombre</mat-label>
+          <input matNativeControl [(ngModel)]="register.name" required #name="ngModel"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matNativeControl [(ngModel)]="register.password" minlength="6" required type="password" #psw="ngModel"/>
+          <mat-error *ngIf="psw.invalid && psw.dirty">La contrase&ntilde;a debe tener al menos 6 caracteres</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Repetir contrase&ntilde;a</mat-label>
+          <input matNativeControl [(ngModel)]="passwordValidator" required [pattern]="'^' + register.password + '$'"  type="password" #pswRepeat="ngModel"/>
+          <mat-error *ngIf="pswRepeat.invalid && pswRepeat.dirty">Las dos contrase&ntilde;as no coinciden</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button (click)="sendRegister()" [disabled]="userName.invalid || psw.invalid || pswRepeat.invalid">Register</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
