@@ -29,3 +29,15 @@ h1{
 .individual-song{
   margin-bottom: 1vh;
 }
+
+.container > mat-card{
+  height: 100%;
+}
+.container{
+  height: 94vh;
+}
+
+.song-content{
+  height: 85vh;
+  overflow-y: auto;
+}

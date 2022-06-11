@@ -5,4 +5,6 @@
 
 .navbar{
   padding-left: 2vw;
+  height: 6vh;
+  min-height: 50px;
 }

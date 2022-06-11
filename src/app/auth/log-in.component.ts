@@ -8,7 +8,7 @@ import {SnackbarService} from "../shared/services/snackbar.service";
 @Component({
   selector: 'app-login',
   templateUrl: 'log-in.component.html',
-  styleUrls: ["log-in.component.css"]
+  styleUrls: ["log-register.component.css"]
 })
 
 export class LogInComponent {
@@ -30,8 +30,8 @@ export class LogInComponent {
   }
 
   sendLogin(){
-    this.login.password = btoa(this.login.password);
-    this.authService.login(this.login)
+    let loginDto: LoginDto = {userName: this.login.userName, password: btoa(this.login.password)};
+    this.authService.login(loginDto)
       .subscribe({
         next: () => {
           const redirectUrl = this.authService.redirectUrl??'/song';
@@ -41,10 +41,10 @@ export class LogInComponent {
                 this.snackBar.openSnackbar("Error en la redirección")
               }
             });
-          this.login.password = "";
         },
         error: err => {
           this.snackBar.openSnackbar(err);
+          this.login.password = "";
         }
       });
   }
