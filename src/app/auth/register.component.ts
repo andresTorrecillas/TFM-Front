@@ -14,7 +14,8 @@ export class RegisterComponent {
     this.register = {
       name: "",
       password: "",
-      userName: ""
+      userName: "",
+      band: ""
     }
     this.passwordValidator = "";
   }
