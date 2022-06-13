@@ -32,7 +32,6 @@ export class AuthService {
           }
           this.writeInStorage(body);
           this.isLogged = true;
-          console.log(this.isLogged);
         })
       );
   }

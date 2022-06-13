@@ -38,7 +38,7 @@ export class SessionStorageService {
      return sessionStorage.getItem(key);
   }
 
-  getSubscriber(key: string | null = null, generate: boolean = false): Observable<any>|null{
+  getObservable(key: string | null = null, generate: boolean = false): Observable<any>|null{
      if(generate){
        if(key !== null && this.subscribers[key] == null){
          this.subscribers[key] = new Subject<string>();

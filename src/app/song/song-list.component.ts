@@ -33,7 +33,6 @@ export class SongListComponent implements OnInit {
       .subscribe({
         next: (body: Array<Song>) => {
           this.songList = body;
-          console.log(this.songList);
         },
         error: error => {
           console.log(error);
