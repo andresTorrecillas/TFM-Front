@@ -1,5 +1,6 @@
+import {User} from "./user.model";
+
 export interface RegisterDto{
-  name: string
-  userName: string,
-  password: string
+  password: string,
+  user: User
 }

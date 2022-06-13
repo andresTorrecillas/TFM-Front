@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {RegisterDto} from "./registerDto.model";
+import {AuthService} from "./auth.service";
+import {Router} from "@angular/router";
+import {SnackbarService} from "../shared/services/snackbar.service";
 
 @Component({
   selector: 'app-register',
@@ -9,26 +12,47 @@ import {RegisterDto} from "./registerDto.model";
 
 export class RegisterComponent {
   public register: RegisterDto;
+  public clearPassword: string;
   public passwordValidator: string;
-  constructor() {
+  private authService: AuthService;
+  private router: Router;
+  private snackBar: SnackbarService;
+
+  constructor(snackBar: SnackbarService, authService: AuthService, router: Router) {
+    this.snackBar = snackBar;
+    this.authService = authService;
+    this.router = router;
     this.register = {
-      name: "",
       password: "",
-      userName: ""
+      user: {
+        name: "",
+        userName: "",
+        bandName: ""
+      }
     }
+    this.clearPassword = "";
     this.passwordValidator = "";
   }
 
   sendRegister(){
-
-  }
-
-  isValid(): boolean {
-    return true;
-  }
-
-  isPasswordUnmatched() {
-    console.log(this.register.password != this.passwordValidator && this.passwordValidator != "" && this.register.password != "")
-    return this.register.password != this.passwordValidator && this.passwordValidator != "" && this.register.password != "";
+    this.register.password = btoa(this.clearPassword);
+    this.authService.register(this.register)
+      .subscribe({
+        next: redirectUrl => {
+          redirectUrl = redirectUrl??"/song"
+          this.router.navigate([redirectUrl])
+            .then(correct => {
+              if(!correct){
+                this.snackBar.openSnackbar("Error en la redirección");
+              }
+            });
+        },
+        error: err => {
+          this.snackBar.openSnackbar(err);
+          this.register.password = "";
+          this.clearPassword = "";
+          this.passwordValidator = "";
+        }
+      })
   }
 }
