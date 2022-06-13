@@ -38,7 +38,7 @@ export class LogInComponent {
           this.router.navigate([redirectUrl])
             .then(correct => {
               if(!correct){
-                this.snackBar.openSnackbar("Error en la redirección")
+                this.snackBar.openSnackbar("Error en la redirección");
               }
             });
         },
