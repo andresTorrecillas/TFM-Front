@@ -15,7 +15,7 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Nombre de la banda</mat-label>
-          <input matNativeControl [(ngModel)]="register.user.bandName" required type="password" #band="ngModel"/>
+          <input matNativeControl [(ngModel)]="register.user.bandName" required type="text" #band="ngModel"/>
         </mat-form-field>
       </div>
       <div>
@@ -28,7 +28,7 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Repetir contrase&ntilde;a</mat-label>
-          <input matNativeControl [(ngModel)]="passwordValidator" required [pattern]="'^' + register.password + '$'"  type="password" #pswRepeat="ngModel"/>
+          <input matNativeControl [(ngModel)]="passwordValidator" required [pattern]="'^' + clearPassword + '$'"  type="password" #pswRepeat="ngModel"/>
           <mat-error *ngIf="pswRepeat.invalid && pswRepeat.dirty">Las dos contrase&ntilde;as no coinciden</mat-error>
         </mat-form-field>
       </div>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map, mergeMap, Observable} from "rxjs";
 import {AuthObject} from "./authObject.model";
 import {EndPoints} from "../shared/end-points";
@@ -6,6 +6,8 @@ import {HttpService} from "../shared/services/http.service";
 import {LoginDto} from "./loginDto.model";
 import {RegisterDto} from "./registerDto.model";
 import {SessionStorageService} from "../shared/services/session-storage.service";
+import {Base64} from 'js-base64';
+import {DecodedJwt} from "./decodedJwt.model";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,8 @@ export class AuthService {
 
   logout(): void{
     this.isLogged = false;
+    this.sesService.erase(['user', 'bearer_token', 'expiration_date']);
+    this.http.get(EndPoints.LOGOUT).subscribe();
   }
 
   register(data: RegisterDto): Observable<string|null> {
@@ -52,7 +56,6 @@ export class AuthService {
       )
   }
 
-
   public isLoggedIn(): boolean {
     const authObj: AuthObject|null = this.readFromStorage();
     if(authObj == null) {
@@ -60,6 +63,26 @@ export class AuthService {
     }
     this.isLogged = parseInt(authObj.expirationDate) > Date.now();
     return this.isLogged;
+  }
+
+  public static decodeJWT(token: string): DecodedJwt|null{
+    let tokenArray = token.split(".");
+    if(tokenArray.length < 3){
+      return null;
+    }
+    let decodedHeader = JSON.parse(Base64.decode(tokenArray[0]));
+    let decodedPayload = JSON.parse(Base64.decode(tokenArray[1]));
+    return {
+      header: {
+        type: decodedHeader.typ,
+        algorithm: decodedHeader.alg
+      },
+      payload: {
+        issuedAt: decodedPayload.iat,
+        expirationTime: decodedPayload.exp,
+        user: decodedPayload.userName
+      }
+    };
   }
 
   private readFromStorage(): AuthObject|null{

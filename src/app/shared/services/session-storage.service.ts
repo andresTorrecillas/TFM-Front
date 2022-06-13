@@ -52,5 +52,14 @@ export class SessionStorageService {
      return this.subscribers[key??"any"].asObservable();
   }
 
+  erase(keys: string[]) {
+    for (let key of keys) {
+      sessionStorage.removeItem(key);
+      let subject = this.subscribers[key];
+      if(subject !== null){
+        subject.next("");
+      }
+    }
+  }
 
 }

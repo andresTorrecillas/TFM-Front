@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
+import {Observable, tap} from "rxjs";
 import {SessionStorageService} from "./session-storage.service";
+import {AuthService} from "../../auth/auth.service";
 
 @Injectable({
   providedIn: "root"
@@ -25,10 +26,31 @@ export class AuthInterceptor implements HttpInterceptor {
           "Bearer " + token)
       });
 
-      return next.handle(cloned);
+      return next.handle(cloned)
+        .pipe(
+          tap({
+            next: httpEvent => {
+              if(httpEvent instanceof HttpResponse){
+                let responseToken = httpEvent.headers.get("authorization");
+                if(token !== responseToken && responseToken !== null){
+                  responseToken = responseToken.replace("Bearer ", "");
+                  let decodedToken = AuthService.decodeJWT(responseToken);
+                  if(decodedToken !== null) {
+                    this.sesStorage.writeMany({
+                      'bearer_token': responseToken,
+                      'expiration_date': decodedToken.payload.expirationTime.toString()
+                    });
+                  }
+                }
+              }
+            }
+          })
+        );
     }
     else {
       return next.handle(req);
     }
   }
+
+
 }

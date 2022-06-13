@@ -39,6 +39,7 @@ export class RegisterComponent {
     this.authService.register(this.register)
       .subscribe({
         next: redirectUrl => {
+          redirectUrl = redirectUrl??"/song"
           this.router.navigate([redirectUrl])
             .then(correct => {
               if(!correct){
