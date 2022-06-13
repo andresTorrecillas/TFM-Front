@@ -24,6 +24,7 @@ import {AuthService} from "./auth/auth.service";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./shared/services/authInterceptor.service";
 import {RegisterComponent} from "./auth/register.component";
+import {SessionStorageService} from "./shared/services/session-storage.service";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {RegisterComponent} from "./auth/register.component";
     HttpService,
     SnackbarService,
     AuthService,
+    SessionStorageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
