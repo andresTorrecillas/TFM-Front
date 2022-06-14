@@ -56,7 +56,7 @@ export class SessionStorageService {
     for (let key of keys) {
       sessionStorage.removeItem(key);
       let subject = this.subscribers[key];
-      if(subject !== null){
+      if(subject !== null && subject !== undefined ){
         subject.next("");
       }
     }

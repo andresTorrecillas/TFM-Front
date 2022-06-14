@@ -13,9 +13,16 @@ export class SnackbarService{
     this.snackBar = snackBar;
   }
 
-  openSnackbar(message: string, duration: number = environment.NOTIFICATION_DURATION): void{
-    this.snackBar.open(message, "Close",{
+  openSnackbar(message:string, action:string = "Cerrar", duration:number = environment.NOTIFICATION_DURATION): void{
+    this.snackBar.open(message, action,{
       duration: duration * 1000,
     });
+  }
+
+  openErrorSnackbar(message:string, action:string = "Error", duration:number = environment.NOTIFICATION_DURATION): void{
+    this.snackBar.open(message,action,{
+      duration: duration * 1000,
+      panelClass: "bg-danger"
+    })
   }
 }

@@ -20,7 +20,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ConfirmDialogComponent} from "./shared/components/confirm-dialog/confirm-dialog.component";
 import {SnackbarService} from "./shared/services/snackbar.service";
 import {LogInComponent} from "./auth/log-in.component";
-import {AuthService} from "./auth/auth.service";
+import {AuthService} from "./shared/services/auth.service";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./shared/services/authInterceptor.service";
 import {RegisterComponent} from "./auth/register.component";

@@ -4,9 +4,8 @@ import {HttpService} from "../shared/services/http.service";
 import {Song} from "./Song.model";
 import {EndPoints} from "../shared/end-points";
 import {AddUpdateSongDialogComponent} from "./add-update-song-dialog.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {environment} from "../../environments/environment";
 import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
+import {SnackbarService} from "../shared/services/snackbar.service";
 
 @Component({
   selector: 'app-song-list',
@@ -18,9 +17,9 @@ export class SongListComponent implements OnInit {
   public dialog: MatDialog;
   private httpService: HttpService;
   public songList: Array<Song>;
-  private snackBar: MatSnackBar;
+  private snackBar: SnackbarService;
 
-  constructor(dialog:MatDialog, httpService:HttpService, snackBar: MatSnackBar) {
+  constructor(dialog:MatDialog, httpService:HttpService, snackBar: SnackbarService) {
     this.dialog = dialog;
     this.httpService = httpService;
     this.snackBar = snackBar;
@@ -31,12 +30,8 @@ export class SongListComponent implements OnInit {
     this.httpService
       .get(EndPoints.SONG)
       .subscribe({
-        next: (body: Array<Song>) => {
-          this.songList = body;
-        },
-        error: error => {
-          console.log(error);
-        },
+        next: (body: Array<Song>) => this.songList = body,
+        error: error => this.snackBar.openErrorSnackbar(error)
       });
   }
 
@@ -55,14 +50,14 @@ export class SongListComponent implements OnInit {
       .subscribe(
         {
           next: () => {
-            this.openSnackbar("Se ha eliminado la canción correctamente");
+            this.snackBar.openSnackbar("Se ha eliminado la canción correctamente");
             this.songList.forEach((song, index) => {
               if(song.id == id){
                 this.songList.splice(index, 1);
               }
             })
           },
-          error: () => this.openSnackbar("Error, no se ha podido eliminar la canción")
+          error: error => this.snackBar.openErrorSnackbar(error??"No se ha podido eliminar la canción")
         }
       );
   }
@@ -81,20 +76,14 @@ export class SongListComponent implements OnInit {
       this.httpService.post(EndPoints.SONG, result)
         .subscribe({
           next: () => {
-            this.openSnackbar("La canción se guardó correctamente");
+            this.snackBar.openSnackbar("La canción se guardó correctamente");
             this.songList.push(result);
           },
           error: error => {
             console.log(error);
-            this.openSnackbar(error[0].message);
+            this.snackBar.openErrorSnackbar(error);
           }
         });
-    });
-  }
-
-  openSnackbar(message: string, duration: number = environment.NOTIFICATION_DURATION): void{
-    this.snackBar.open(message, "Close",{
-      duration: duration * 1000,
     });
   }
 

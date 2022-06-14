@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 import {SessionStorageService} from "./session-storage.service";
-import {AuthService} from "../../auth/auth.service";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: "root"
@@ -20,7 +20,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const token = this.sesStorage.read("bearer_token");
 
-    if (token !== null) {
+    if (token === null) {
+      const cloned = req.clone({
+        withCredentials: true
+      });
+      return next.handle(cloned);
+    }
+    else {
       const cloned = req.clone({
         headers: req.headers.set("Authorization", "Bearer " + token),
         withCredentials: true
@@ -46,12 +52,6 @@ export class AuthInterceptor implements HttpInterceptor {
             }
           })
         );
-    }
-    else {
-      const cloned = req.clone({
-        withCredentials: true
-      });
-      return next.handle(cloned);
     }
   }
 

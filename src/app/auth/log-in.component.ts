@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {LoginDto} from "./loginDto.model";
 import {HttpService} from "../shared/services/http.service";
-import {AuthService} from "./auth.service";
+import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {SnackbarService} from "../shared/services/snackbar.service";
 

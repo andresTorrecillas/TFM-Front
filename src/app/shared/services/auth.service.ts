@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {map, mergeMap, Observable} from "rxjs";
-import {AuthObject} from "./authObject.model";
-import {EndPoints} from "../shared/end-points";
-import {HttpService} from "../shared/services/http.service";
-import {LoginDto} from "./loginDto.model";
-import {RegisterDto} from "./registerDto.model";
-import {SessionStorageService} from "../shared/services/session-storage.service";
+import {AuthObject} from "../../auth/authObject.model";
+import {EndPoints} from "../end-points";
+import {HttpService} from "./http.service";
+import {LoginDto} from "../../auth/loginDto.model";
+import {RegisterDto} from "../../auth/registerDto.model";
+import {SessionStorageService} from "./session-storage.service";
 import {Base64} from 'js-base64';
-import {DecodedJwt} from "./decodedJwt.model";
+import {DecodedJwt} from "../../auth/decodedJwt.model";
 
 @Injectable({
   providedIn: 'root'
