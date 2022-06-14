@@ -44,7 +44,7 @@ export class SongComponent implements OnInit {
           },
           error: error => {
             this.song.title = "ERROR";
-            console.log(error);
+            this.snackBarService.openErrorSnackbar(error);
           },
         });
   }
@@ -70,7 +70,7 @@ export class SongComponent implements OnInit {
             this.snackBarService.openSnackbar("La canción se guardó correctamente");
             this.song.lyrics = result.lyrics;
           },
-          error: () => this.snackBarService.openSnackbar("No se pudo actualizar la canción")
+          error: error => this.snackBarService.openErrorSnackbar(error??"No se pudo actualizar la canción")
         });
     });
   }

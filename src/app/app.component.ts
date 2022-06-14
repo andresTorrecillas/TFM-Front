@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionStorageService} from "./shared/services/session-storage.service";
 import {Observable} from "rxjs";
-import {AuthService} from "./auth/auth.service";
+import {AuthService} from "./shared/services/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -36,7 +36,9 @@ export class AppComponent implements OnInit{
       this.bandNameObservable.subscribe(
         savedUser => {
           this.logged = this.authService.isLoggedIn();
-          this.bandName = JSON.parse(savedUser).bandName;
+          if(savedUser !== ""){
+            this.bandName = JSON.parse(savedUser).bandName;
+          }
         }
       );
     } else {
