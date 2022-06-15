@@ -1,0 +1,25 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <h1>Concerts</h1>
+      <button mat-icon-button (click)="openDialog()">
+        <mat-icon>playlist_add</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content class="element-content">
+      <mat-card *ngFor="let concert of concertList; let i = index" class="individual-element">
+        <div class="row">
+          <a routerLink="{{concert.id}}" class="col-4">{{concert.name}}</a>
+          <span class="col">{{concert.modality}}</span>
+          <span class="col">{{concert.date}}</span>
+          <span class="col">{{concert.address}}</span>
+          <span class="col">{{concert.contractState}}</span>
+          <span class="col">
+            <mat-icon class="deleteIcon col" (click)="onDeleteConcert(concert.id)">delete</mat-icon>
+          </span>
+
+        </div>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

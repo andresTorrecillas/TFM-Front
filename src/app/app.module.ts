@@ -25,10 +25,14 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./shared/services/authInterceptor.service";
 import {RegisterComponent} from "./auth/register.component";
 import {SessionStorageService} from "./shared/services/session-storage.service";
+import {ConcertComponent} from "./concert/concert.component";
+import {ConcertListComponent} from "./concert/concert-list.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    ConcertComponent,
+    ConcertListComponent,
     SongComponent,
     SongListComponent,
     LogInComponent,

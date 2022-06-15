@@ -1,68 +1,68 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {HttpService} from "../shared/services/http.service";
-import {Song} from "./Song.model";
-import {EndPoints} from "../shared/end-points";
-import {AddUpdateSongDialogComponent} from "./add-update-song-dialog.component";
-import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
 import {SnackbarService} from "../shared/services/snackbar.service";
+import {EndPoints} from "../shared/end-points";
+import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
+import {AddUpdateSongDialogComponent} from "../song/add-update-song-dialog.component";
+import {Concert} from "./concert.model";
 
 @Component({
-  selector: 'app-song-list',
-  templateUrl: 'song-list.component.html',
+  selector: 'app-concert-list',
+  templateUrl: 'concert-list.component.html',
   styleUrls: ['../shared/styles/element-list.style.css']
 })
-export class SongListComponent implements OnInit {
 
+export class ConcertListComponent implements OnInit {
   public dialog: MatDialog;
   private httpService: HttpService;
-  public songList: Array<Song>;
+  public concertList: Array<Concert>;
   private snackBar: SnackbarService;
 
-  constructor(dialog:MatDialog, httpService:HttpService, snackBar: SnackbarService) {
+  constructor(dialog: MatDialog, httpService: HttpService, snackBar: SnackbarService) {
     this.dialog = dialog;
     this.httpService = httpService;
     this.snackBar = snackBar;
-    this.songList = [];
+    this.concertList = [];
   }
 
   ngOnInit() {
     this.httpService
-      .get(EndPoints.SONG)
+      .get(EndPoints.CONCERT)
       .subscribe({
-        next: (body: Array<Song>) => this.songList = body,
+        next: (body: Array<Concert>) => {this.concertList = body;console.log(JSON.stringify(Date.now()))},
         error: error => this.snackBar.openErrorSnackbar(error)
       });
   }
 
-  onDeleteSong(id: string): void{
+  onDeleteConcert(id: string): void {
     this.dialog.open(ConfirmDialogComponent)
       .afterClosed()
       .subscribe(confirmation => {
-        if(confirmation){
-          this.deleteSong(id);
+        if (confirmation) {
+          this.deleteConcert(id);
         }
       })
   }
 
-  private deleteSong(id: string){
-    this.httpService.delete(EndPoints.SONG + "/" + id)
+  private deleteConcert(id: string) {
+    this.httpService.delete(EndPoints.CONCERT + "/" + id)
       .subscribe(
         {
           next: () => {
-            this.snackBar.openSnackbar("Se ha eliminado la canción correctamente");
-            this.songList.forEach((song, index) => {
-              if(song.id == id){
-                this.songList.splice(index, 1);
+            this.snackBar.openSnackbar("Se ha eliminado el concierto correctamente");
+            this.concertList.forEach((concert, index) => {
+              if (concert.id == id) {
+                this.concertList.splice(index, 1);
               }
             })
           },
-          error: error => this.snackBar.openErrorSnackbar(error??"No se ha podido eliminar la canción")
+          error: error => this.snackBar.openErrorSnackbar(error ?? "No se ha podido eliminar el concierto")
         }
       );
   }
 
-  openDialog(): void{
+  openDialog(): void {
     const dialogRef = this.dialog.open(AddUpdateSongDialogComponent, {
       width: '40vw',
       height: '80vh',
@@ -73,11 +73,11 @@ export class SongListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.httpService.post(EndPoints.SONG, result)
+      this.httpService.post(EndPoints.CONCERT, result)
         .subscribe({
           next: () => {
-            this.snackBar.openSnackbar("La canción se guardó correctamente");
-            this.songList.push(result);
+            this.snackBar.openSnackbar("El concierto se guardó correctamente");
+            this.concertList.push(result);
           },
           error: error => {
             console.log(error);
@@ -86,5 +86,4 @@ export class SongListComponent implements OnInit {
         });
     });
   }
-
 }
