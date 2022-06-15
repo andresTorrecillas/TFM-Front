@@ -6,4 +6,5 @@ export class EndPoints{
   static LOGIN = EndPoints.USER + '/login';
   static REGISTER = EndPoints.USER + '/register';
   static LOGOUT = EndPoints.USER + '/logout';
+  static CONCERT = environment.REST_SERVER + '/concert';
 }
