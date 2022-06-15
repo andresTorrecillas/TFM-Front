@@ -6,19 +6,25 @@ import {SongListComponent} from "./song/song-list.component";
 import {LogInComponent} from "./auth/log-in.component";
 import {AuthGuard} from "./auth/auth.guard";
 import {RegisterComponent} from "./auth/register.component";
+import {ConcertListComponent} from "./concert/concert-list.component";
+import {ConcertComponent} from "./concert/concert.component";
 
 const routes: Routes= [
   { path: 'song', canActivate: [AuthGuard], children:[
       { path:'', component: SongListComponent },
       { path:':id', component: SongComponent }
     ] },
+  { path: 'concert', canActivate: [AuthGuard], children:[
+      { path: '', component: ConcertListComponent },
+      { path: ':id', component: ConcertComponent }
+    ]},
   { path: 'login', component: LogInComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo:'song', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes), HttpClientModule],
-  exports: [ RouterModule]}
-)
+  imports: [ RouterModule.forRoot(routes), HttpClientModule ],
+  exports: [ RouterModule ]
+})
 export class AppRoutingModule{}
