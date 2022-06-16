@@ -73,17 +73,19 @@ export class SongListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.httpService.post(EndPoints.SONG, result)
-        .subscribe({
-          next: () => {
-            this.snackBar.openSnackbar("La canción se guardó correctamente");
-            this.songList.push(result);
-          },
-          error: error => {
-            console.log(error);
-            this.snackBar.openErrorSnackbar(error);
-          }
-        });
+      if(result !== undefined) {
+        this.httpService.post(EndPoints.SONG, result)
+          .subscribe({
+            next: () => {
+              this.snackBar.openSnackbar("La canción se guardó correctamente");
+              this.songList.push(result);
+            },
+            error: error => {
+              console.log(error);
+              this.snackBar.openErrorSnackbar(error);
+            }
+          });
+      }
     });
   }
 

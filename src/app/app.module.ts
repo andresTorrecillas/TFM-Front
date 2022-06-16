@@ -27,6 +27,7 @@ import {RegisterComponent} from "./auth/register.component";
 import {SessionStorageService} from "./shared/services/session-storage.service";
 import {ConcertComponent} from "./concert/concert.component";
 import {ConcertListComponent} from "./concert/concert-list.component";
+import {AddUpdateConcertDialogComponent} from "./concert/add-update-concert-dialog.component";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {ConcertListComponent} from "./concert/concert-list.component";
     SongListComponent,
     LogInComponent,
     AddUpdateSongDialogComponent,
+    AddUpdateConcertDialogComponent,
     ConfirmDialogComponent,
     RegisterComponent
   ],
