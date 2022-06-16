@@ -25,16 +25,14 @@ export class AddUpdateConcertDialogComponent implements OnInit{
         name: data.concert.name,
         address: data.concert.address,
         color: data.concert.color,
-        contractState: data.concert.contractState,
-        coordinates: data.concert.coordinates,
+        state: data.concert.state,
         date: data.concert.date
       };
     } else {
       this.concert = {
         address: "",
         color: "",
-        contractState: "",
-        coordinates: {latitude: 0, longitude: 0},
+        state: "",
         date: new DateTime(),
         id: "",
         modality: "",
