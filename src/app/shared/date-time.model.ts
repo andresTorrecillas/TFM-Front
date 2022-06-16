@@ -1,6 +1,6 @@
 export class DateTime {
   private _date: string;
-  private _timezone_type: number;
+  private readonly _timezone_type: number;
   private _timezone: string;
 
   constructor() {
@@ -26,10 +26,6 @@ export class DateTime {
     return this._timezone_type;
   }
 
-  set timezone_type(value: number) {
-    this._timezone_type = value;
-  }
-
   get timezone(): string {
     return this._timezone;
   }
@@ -42,15 +38,27 @@ export class DateTime {
     return this.getDateObject().toLocaleString('es', {dateStyle:"short", timeStyle:"short"});
   }
 
-  public static GetFormattedDate(date: DateTime){
-    return date.getDateObject().getDay();
+  public static GetDateTimeFromString(stringDate: string): DateTime|null{
+    let resultDate = null;
+    let date = new Date(stringDate);
+    if(date.toString() != null){
+      resultDate = new DateTime();
+      resultDate.date = date.toISOString();
+      resultDate.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    }
+    return resultDate;
+  }
+
+  public static GetDateTimeOf(date: Date){
+    let resultDate = new DateTime();
+    resultDate.date = date.toISOString();
+    resultDate.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
   public static copy(date: DateTime): DateTime{
     let dateCopy = new DateTime();
     dateCopy.date = date.date;
     dateCopy.timezone = date.timezone;
-    dateCopy.timezone_type = date.timezone_type;
     return dateCopy;
   }
 }

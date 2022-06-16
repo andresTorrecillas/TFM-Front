@@ -28,6 +28,8 @@ import {SessionStorageService} from "./shared/services/session-storage.service";
 import {ConcertComponent} from "./concert/concert.component";
 import {ConcertListComponent} from "./concert/concert-list.component";
 import {AddUpdateConcertDialogComponent} from "./concert/add-update-concert-dialog.component";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import {AddUpdateConcertDialogComponent} from "./concert/add-update-concert-dial
     MatCardModule,
     FormsModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   providers: [
     HttpService,

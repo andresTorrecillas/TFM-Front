@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>A&ntilde;adir Canci&oacute;n</h1>
+<h1 mat-dialog-title>{{update?"Actualizar":"Añadir"}} Canci&oacute;n</h1>
 <div mat-dialog-content>
-  <mat-form-field appearance="fill" id="input-wrapper">
+  <mat-form-field appearance="fill" id="input-container">
     <mat-label>T&iacute;tulo</mat-label>
     <input matInput required [(ngModel)]="song.title" [disabled]="update" #title="ngModel">
   </mat-form-field>

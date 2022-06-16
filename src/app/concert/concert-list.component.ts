@@ -4,7 +4,7 @@ import {HttpService} from "../shared/services/http.service";
 import {SnackbarService} from "../shared/services/snackbar.service";
 import {EndPoints} from "../shared/end-points";
 import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
-import {AddUpdateSongDialogComponent} from "../song/add-update-song-dialog.component";
+import {AddUpdateConcertDialogComponent} from "./add-update-concert-dialog.component";
 import {Concert} from "./concert.model";
 import {DateTime} from "../shared/date-time.model";
 
@@ -64,7 +64,7 @@ export class ConcertListComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddUpdateSongDialogComponent, {
+    const dialogRef = this.dialog.open(AddUpdateConcertDialogComponent, {
       width: '40vw',
       height: '80vh',
       data: {
@@ -74,7 +74,8 @@ export class ConcertListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result !== undefined){
+      console.log(result);
+      if(result !== null && result !== undefined){
         this.httpService.post(EndPoints.CONCERT, result)
           .subscribe({
             next: () => {
