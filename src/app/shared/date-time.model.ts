@@ -5,7 +5,7 @@ export class DateTime {
 
   constructor() {
     let date = new Date();
-    this._date = date.toISOString();
+    this._date = DateTime.FormatISODate(date.toISOString());
     this._timezone_type = 3;
     this._timezone = "Europe/Madrid"
   }
@@ -41,12 +41,16 @@ export class DateTime {
   public static GetDateTimeFromString(stringDate: string): DateTime|null{
     let resultDate = null;
     let date = new Date(stringDate);
-    if(date.toString() != null){
+    if(date.toString() != "Invalid Date"){
       resultDate = new DateTime();
-      resultDate.date = date.toISOString();
+      resultDate.date = DateTime.FormatISODate(date.toISOString());
       resultDate.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
     return resultDate;
+  }
+
+  private static FormatISODate(dateString: string){
+    return dateString.replace(/\./, "+").replace('Z', '0');
   }
 
   public static GetDateTimeOf(date: Date){

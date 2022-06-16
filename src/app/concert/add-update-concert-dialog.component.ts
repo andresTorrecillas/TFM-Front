@@ -50,7 +50,6 @@ export class AddUpdateConcertDialogComponent implements OnInit{
       throw Error("No se ha podido generar la fecha solicitada");
     }
     this.concert.date = obtainedDate;
-    console.log(obtainedDate.toString() + " " + obtainedDate.date);
     this.dialogRef.close(this.concert);
   }
 }
