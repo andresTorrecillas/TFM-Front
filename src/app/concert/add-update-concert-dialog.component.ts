@@ -12,10 +12,12 @@ export class AddUpdateConcertDialogComponent implements OnInit{
   private dialogRef: MatDialogRef<AddUpdateConcertDialogComponent>;
   update: boolean;
   concert: Concert;
+  dateString: string;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: {update: boolean, concert: Concert}, dialogRef: MatDialogRef<AddUpdateConcertDialogComponent>) {
     this.dialogRef = dialogRef;
     this.update = data.update;
+    this.dateString = "";
     if(this.update){
       this.concert = {
         id: data.concert.id,
@@ -42,5 +44,15 @@ export class AddUpdateConcertDialogComponent implements OnInit{
   }
 
   ngOnInit(){
+  }
+
+  sendData() {
+    let obtainedDate = DateTime.GetDateTimeFromString(this.dateString);
+    if(obtainedDate === null){
+      throw Error("No se ha podido generar la fecha solicitada");
+    }
+    this.concert.date = obtainedDate;
+    console.log(obtainedDate.toString() + " " + obtainedDate.date);
+    this.dialogRef.close(this.concert);
   }
 }

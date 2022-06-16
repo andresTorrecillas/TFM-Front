@@ -11,33 +11,44 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Nombre</mat-label>
-    <input  matInput required [(ngModel)]="concert.name">
+    <input  matInput required [(ngModel)]="concert.name" #name="ngModel">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Modalidad</mat-label>
-    <input  matInput required [(ngModel)]="concert.modality">
+    <input  matInput required [(ngModel)]="concert.modality" #modality="ngModel">
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <!--<mat-form-field appearance="fill">
     <mat-label>Date</mat-label>
     <input matInput [(ngModel)]="concert.date" [matDatepicker]="picker" #date="ngModel">
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>-->
+  <mat-form-field appearance="fill">
+    <mat-label>Date</mat-label>
+    <input matInput required [(ngModel)]="dateString" type="datetime-local" #date="ngModel">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Direcci&oacute;n</mat-label>
-    <input  matInput required [(ngModel)]="concert.address">
+    <input  matInput required [(ngModel)]="concert.address" #address="ngModel">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Estado de contrataci&oacute;n</mat-label>
-    <input  matInput required [(ngModel)]="concert.contractState">
+    <input  matInput required [(ngModel)]="concert.contractState" #state="ngModel">
   </mat-form-field>
   <mat-form-field id="colorPicker" appearance="fill">
     <mat-label>Color</mat-label>
-    <input  matInput required [(ngModel)]="concert.color" type="color">
+    <input  matInput required [(ngModel)]="concert.color" type="color" #color="ngModel">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="null">Cancelar</button>
-  <button mat-button [mat-dialog-close]="concert" [disabled]="date.invalid">A&ntilde;adir</button>
+  <button mat-button (click)="sendData()"  [disabled]="
+    name.invalid||
+    modality.invalid||
+    date.invalid||
+    address.invalid||
+    state.invalid||
+    color.invalid
+  ">A&ntilde;adir</button>
 </div>
