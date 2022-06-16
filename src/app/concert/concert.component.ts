@@ -33,8 +33,7 @@ export class ConcertComponent implements OnInit {
     this.concert = {
       address: "",
       color: "",
-      contractState: "",
-      coordinates: {latitude: 0, longitude: 0},
+      state: "",
       date: new DateTime(),
       id: "",
       modality: "",
