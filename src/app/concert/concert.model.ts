@@ -1,4 +1,4 @@
-import {DateTime} from "./date-time.model";
+import {DateTime} from "../shared/date-time.model";
 
 export interface Concert {
   id: string,

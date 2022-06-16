@@ -37,4 +37,20 @@ export class DateTime {
   set timezone(value: string) {
     this._timezone = value;
   }
+
+  public toString(): string{
+    return this.getDateObject().toLocaleString('es', {dateStyle:"short", timeStyle:"short"});
+  }
+
+  public static GetFormattedDate(date: DateTime){
+    return date.getDateObject().getDay();
+  }
+
+  public static copy(date: DateTime): DateTime{
+    let dateCopy = new DateTime();
+    dateCopy.date = date.date;
+    dateCopy.timezone = date.timezone;
+    dateCopy.timezone_type = date.timezone_type;
+    return dateCopy;
+  }
 }

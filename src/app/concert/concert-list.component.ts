@@ -6,6 +6,7 @@ import {EndPoints} from "../shared/end-points";
 import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
 import {AddUpdateSongDialogComponent} from "../song/add-update-song-dialog.component";
 import {Concert} from "./concert.model";
+import {DateTime} from "../shared/date-time.model";
 
 @Component({
   selector: 'app-concert-list',
@@ -30,7 +31,7 @@ export class ConcertListComponent implements OnInit {
     this.httpService
       .get(EndPoints.CONCERT)
       .subscribe({
-        next: (body: Array<Concert>) => {this.concertList = body;console.log(JSON.stringify(Date.now()))},
+        next: (body: Array<Concert>) => {this.concertList = body; this.concertList.forEach(value => value.date = DateTime.copy(value.date));},
         error: error => this.snackBar.openErrorSnackbar(error)
       });
   }
