@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>A&ntilde;adir Canci&oacute;n</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" id="input-wrapper">
+    <mat-label>T&iacute;tulo</mat-label>
+    <input matInput required [(ngModel)]="concert.name" [disabled]="update" #title="ngModel">
+  </mat-form-field>
+  <mat-form-field appearance="fill" id="textarea-wrapper">
+    <mat-label>Lyrics</mat-label>
+    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="15" pattern="^[\da-zA-ZÁ-ÿ\040\-\n.,\'¿?¡!]+$" [(ngModel)]="concert.address" #lyrics="ngModel"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="concert" [disabled]="title.invalid || lyrics.invalid">A&ntilde;adir</button>
+</div>
