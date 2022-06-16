@@ -74,17 +74,19 @@ export class ConcertListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.httpService.post(EndPoints.CONCERT, result)
-        .subscribe({
-          next: () => {
-            this.snackBar.openSnackbar("El concierto se guardó correctamente");
-            this.concertList.push(result);
-          },
-          error: error => {
-            console.log(error);
-            this.snackBar.openErrorSnackbar(error);
-          }
-        });
+      if(result !== undefined){
+        this.httpService.post(EndPoints.CONCERT, result)
+          .subscribe({
+            next: () => {
+              this.snackBar.openSnackbar("El concierto se guardó correctamente");
+              this.concertList.push(result);
+            },
+            error: error => {
+              console.log(error);
+              this.snackBar.openErrorSnackbar(error);
+            }
+          });
+      }
     });
   }
 }
