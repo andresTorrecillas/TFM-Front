@@ -6,8 +6,8 @@
         <mat-icon>playlist_add</mat-icon>
       </button>
     </mat-card-header>
-    <mat-card-content class="song-content">
-      <mat-card *ngFor="let song of songList; let i = index" class="individual-song">
+    <mat-card-content class="element-content">
+      <mat-card *ngFor="let song of songList; let i = index" class="individual-element">
         <a routerLink="{{song.id}}">{{song.title}}</a>
         <mat-icon class="deleteIcon" (click)="onDeleteSong(song.id)">delete</mat-icon>
       </mat-card>

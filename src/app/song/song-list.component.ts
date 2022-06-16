@@ -10,7 +10,7 @@ import {SnackbarService} from "../shared/services/snackbar.service";
 @Component({
   selector: 'app-song-list',
   templateUrl: 'song-list.component.html',
-  styleUrls: ['song-list.component.css']
+  styleUrls: ['../shared/styles/element-list.style.css']
 })
 export class SongListComponent implements OnInit {
 
@@ -73,17 +73,19 @@ export class SongListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.httpService.post(EndPoints.SONG, result)
-        .subscribe({
-          next: () => {
-            this.snackBar.openSnackbar("La canción se guardó correctamente");
-            this.songList.push(result);
-          },
-          error: error => {
-            console.log(error);
-            this.snackBar.openErrorSnackbar(error);
-          }
-        });
+      if(result !== undefined) {
+        this.httpService.post(EndPoints.SONG, result)
+          .subscribe({
+            next: () => {
+              this.snackBar.openSnackbar("La canción se guardó correctamente");
+              this.songList.push(result);
+            },
+            error: error => {
+              console.log(error);
+              this.snackBar.openErrorSnackbar(error);
+            }
+          });
+      }
     });
   }
 

@@ -26,7 +26,7 @@ h1{
   cursor: pointer;
 }
 
-.individual-song{
+.individual-element{
   margin-bottom: 1vh;
 }
 
@@ -37,7 +37,15 @@ h1{
   height: 94vh;
 }
 
-.song-content{
+.element-content{
   height: 85vh;
   overflow-y: auto;
+}
+
+.list-header{
+  border-bottom: 2px solid #000000;
+}
+
+.col{
+  text-align: center;
 }

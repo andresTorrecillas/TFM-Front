@@ -3,6 +3,10 @@
   right: 2vw;
 }
 
+.clickable:hover{
+  cursor: pointer;
+}
+
 .navbar{
   padding-left: 2vw;
   height: 6vh;
