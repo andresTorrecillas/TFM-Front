@@ -74,17 +74,15 @@ export class ConcertListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      console.log(JSON.stringify(result));
       if(result !== null && result !== undefined){
         this.httpService.post(EndPoints.CONCERT, result)
           .subscribe({
-            next: () => {
+            next: concert => {
               this.snackBar.openSnackbar("El concierto se guardó correctamente");
+              result.id = concert.id;
               this.concertList.push(result);
             },
             error: error => {
-              console.log(error);
               this.snackBar.openErrorSnackbar(error);
             }
           });

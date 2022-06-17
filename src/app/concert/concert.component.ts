@@ -4,7 +4,7 @@ import {DateTime} from "../shared/date-time.model";
 import {EndPoints} from "../shared/end-points";
 import {HttpService} from "../shared/services/http.service";
 import {SnackbarService} from "../shared/services/snackbar.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
@@ -16,17 +16,17 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 export class ConcertComponent implements OnInit {
 
   private httpService: HttpService;
-  private snackBarService: SnackbarService;
+  private snackBar: SnackbarService;
   private route: ActivatedRoute;
   private sanitizer: DomSanitizer;
+  private router: Router;
   concert: Concert;
   search: string;
   mapUrl: SafeResourceUrl;
-  dangerousVideoUrl: string;
-  videoUrl: SafeResourceUrl;
-  constructor(httpService: HttpService, snackBarService: SnackbarService, route: ActivatedRoute, sanitizer: DomSanitizer) {
+  constructor(httpService: HttpService, snackBarService: SnackbarService, route: ActivatedRoute, router:Router, sanitizer: DomSanitizer) {
+    this.router = router;
     this.httpService = httpService;
-    this.snackBarService = snackBarService;
+    this.snackBar = snackBarService;
     this.route = route;
     this.sanitizer = sanitizer;
     this.search = "España"
@@ -41,9 +41,6 @@ export class ConcertComponent implements OnInit {
       modality: "",
       name: ""
     }
-    this.dangerousVideoUrl = "https://www.youtube.com/embed/UXBMMr4_C-U";
-    this.videoUrl =
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.dangerousVideoUrl);
   }
 
   ngOnInit() {
@@ -60,7 +57,13 @@ export class ConcertComponent implements OnInit {
         },
         error: error => {
           this.concert.name = "ERROR";
-          this.snackBarService.openErrorSnackbar(error);
+          this.snackBar.openErrorSnackbar(error);
+          this.router.navigate(['/concert'])
+            .then(correct => {
+              if(!correct){
+                this.snackBar.openSnackbar("Error en la redirección");
+              }
+            });
         },
       });
   }

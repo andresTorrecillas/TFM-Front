@@ -76,8 +76,9 @@ export class SongListComponent implements OnInit {
       if(result !== undefined) {
         this.httpService.post(EndPoints.SONG, result)
           .subscribe({
-            next: () => {
+            next: song => {
               this.snackBar.openSnackbar("La canción se guardó correctamente");
+              result.id = song.id;
               this.songList.push(result);
             },
             error: error => {

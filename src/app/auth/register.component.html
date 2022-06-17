@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" (keydown.enter)="onEnterKeyDown(!(userName.invalid || psw.invalid || pswRepeat.invalid || band.invalid))">
   <mat-card class="form">
     <mat-card-title class="text-center">Register</mat-card-title>
     <mat-card-content>
@@ -34,6 +34,7 @@
       </div>
       <div>
         <button mat-raised-button (click)="sendRegister()" [disabled]="userName.invalid || psw.invalid || pswRepeat.invalid || band.invalid">Register</button>
+        <mat-spinner *ngIf="spinnerActive" diameter="50"></mat-spinner>
       </div>
     </mat-card-content>
   </mat-card>

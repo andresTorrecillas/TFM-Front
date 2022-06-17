@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" (keydown.enter)="onEnterKeyDown(!userName.invalid && !psw.invalid)">
   <mat-card class="form">
     <mat-card-title class="text-center">Log In</mat-card-title>
     <mat-card-content>
@@ -17,7 +17,10 @@
       </div>
       <div>
         <button mat-raised-button (click)="sendLogin()" [disabled]="userName.invalid || psw.invalid">Log in</button>
+        <mat-spinner *ngIf="spinnerActive" diameter="50"></mat-spinner>
       </div>
     </mat-card-content>
   </mat-card>
+  <!--<mat-spinner *ngIf="spinnerActive"></mat-spinner>-->
+
 </div>

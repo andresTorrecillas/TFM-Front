@@ -17,6 +17,7 @@ export class LogInComponent {
   private authService: AuthService;
   private router: Router;
   private snackBar: SnackbarService;
+  spinnerActive: boolean;
 
   constructor(snackBar: SnackbarService, http: HttpService, router: Router, authService: AuthService) {
     this.http = http;
@@ -27,13 +28,16 @@ export class LogInComponent {
       password: ""
     }
     this.snackBar = snackBar;
+    this.spinnerActive = false;
   }
 
   sendLogin(){
     let loginDto: LoginDto = {userName: this.login.userName, password: btoa(this.login.password)};
+    this.spinnerActive = true;
     this.authService.login(loginDto)
       .subscribe({
         next: () => {
+          this.spinnerActive = false;
           const redirectUrl = this.authService.redirectUrl??'/song';
           this.router.navigate([redirectUrl])
             .then(correct => {
@@ -45,7 +49,14 @@ export class LogInComponent {
         error: err => {
           this.snackBar.openSnackbar(err);
           this.login.password = "";
+          this.spinnerActive = false;
         }
       });
+  }
+
+  onEnterKeyDown(active: boolean|null){
+    if(active){
+      this.sendLogin();
+    }
   }
 }
