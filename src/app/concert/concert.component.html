@@ -1,20 +1,37 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <h1>{{this.concert.name}}</h1>
+      <h1>{{concert.name}}</h1>
       <button mat-icon-button (click)="openEditDialog()">
         <mat-icon>edit</mat-icon>
       </button>
     </mat-card-header>
-    <iframe
-      width="450"
-      height="250"
-      class="e2e-iframe-untrusted-src"
-      style="border:0"
-      referrerpolicy="no-referrer-when-downgrade"
-      [src]="mapUrl"
-      allowfullscreen>
-    </iframe>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-7">
+          <mat-card>
+            <p><span>Modalidad:</span> {{concert.modality}}</p>
+          </mat-card>
+          <mat-card>
+            <p><span>Fecha:</span> {{concert.date}}</p>
+          </mat-card>
+          <mat-card>
+            <p><span>Direcci&oacute;n:</span> {{concert.address}}</p>
+          </mat-card>
+          <mat-card>
+            <p><span>Estado de contrataci&oacute;n:</span> {{concert.state}}</p>
+          </mat-card>
+        </div>
+        <iframe
+          class="col"
+          style="border:0"
+          referrerpolicy="no-referrer-when-downgrade"
+          [src]="mapUrl"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </mat-card-content>
+
   </mat-card>
 </div>
 
