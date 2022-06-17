@@ -9,7 +9,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-concert',
-  templateUrl: 'concert.component.html'
+  templateUrl: 'concert.component.html',
+  styleUrls: ['concert.component.css']
 })
 
 export class ConcertComponent implements OnInit {
@@ -29,7 +30,8 @@ export class ConcertComponent implements OnInit {
     this.route = route;
     this.sanitizer = sanitizer;
     this.search = "España"
-    this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/search?q="+this.search+"&key=AIzaSyDIRRCfHFf_CbmqYzhomCR35rJNh4am9oU")
+    this.mapUrl = "";
+    this.setMapUrl();
     this.concert = {
       address: "",
       color: "",
@@ -54,6 +56,7 @@ export class ConcertComponent implements OnInit {
           this.concert = body;
           this.concert.date = DateTime.copy(body.date);
           this.search = this.convertAddressToSearch(this.concert.address);
+          this.setMapUrl();
         },
         error: error => {
           this.concert.name = "ERROR";
@@ -63,6 +66,12 @@ export class ConcertComponent implements OnInit {
   }
 
   private convertAddressToSearch = (address:string): string => address.replace(/ ./, "+");
+
+  private setMapUrl(): void{
+    this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      "https://www.google.com/maps/embed/v1/search?q="+this.search+"&key=AIzaSyDIRRCfHFf_CbmqYzhomCR35rJNh4am9oU"
+    )
+  }
 
   openEditDialog() {
 

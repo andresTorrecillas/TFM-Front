@@ -1,0 +1,11 @@
+iframe{
+  height: 40vh;
+}
+
+mat-card > p > span{
+  font-weight: bold;
+}
+
+mat-card{
+  margin-bottom: 5px;
+}
