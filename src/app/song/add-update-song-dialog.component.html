@@ -11,5 +11,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="song" [disabled]="title.invalid || lyrics.invalid">A&ntilde;adir</button>
+  <button mat-button [mat-dialog-close]="song" [disabled]="title.invalid || lyrics.invalid">{{update?"Editar":"A&ntilde;adir"}}</button>
 </div>

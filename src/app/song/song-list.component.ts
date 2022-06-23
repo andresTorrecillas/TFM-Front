@@ -6,6 +6,7 @@ import {EndPoints} from "../shared/end-points";
 import {AddUpdateSongDialogComponent} from "./add-update-song-dialog.component";
 import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
 import {SnackbarService} from "../shared/services/snackbar.service";
+import {catchError, firstValueFrom, map} from "rxjs";
 
 @Component({
   selector: 'app-song-list',
@@ -62,7 +63,7 @@ export class SongListComponent implements OnInit {
       );
   }
 
-  openDialog(): void{
+  openCreateDialog(): void{
     const dialogRef = this.dialog.open(AddUpdateSongDialogComponent, {
       width: '40vw',
       height: '80vh',
@@ -71,23 +72,65 @@ export class SongListComponent implements OnInit {
         song: null
       }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.httpService.post(EndPoints.SONG, result)
+        .subscribe({
+          next: receivedSong => {
+            this.snackBar.openSnackbar("La canción se guardó correctamente");
+            result.id = receivedSong.id;
+            this.songList.push(result);
+          },
+          error: error => {
+            this.snackBar.openErrorSnackbar(error);
+          }
+        });
+    });
+  }
+
+  openUpdateDialog(id: string): void{
+    if(id == ""){
+      throw new Error('El identificador tiene que estar indicado si se va a modificar la canción');
+    }
+    let song: any = this.songList.find(value => value.id == id);
+    if(song === undefined){
+      throw new Error('No hay ninguna canción con el identificador indicado');
+    }
+    const dialogRef = this.dialog.open(AddUpdateSongDialogComponent, {
+      width: '40vw',
+      height: '80vh',
+      data: {
+        update: true,
+        song: song
+      }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result !== undefined) {
-        this.httpService.post(EndPoints.SONG, result)
-          .subscribe({
-            next: song => {
-              this.snackBar.openSnackbar("La canción se guardó correctamente");
-              result.id = song.id;
-              this.songList.push(result);
-            },
-            error: error => {
-              console.log(error);
-              this.snackBar.openErrorSnackbar(error);
-            }
-          });
+        this.updateSong(song, result)
+          .then(value => {
+            this.songList.splice(this.songList.indexOf(song), 1, value);
+          })
+          .catch();
       }
     });
+  }
+
+  updateSong(song: Song, result: Song): Promise<Song>{
+    return firstValueFrom(this.httpService.patch(EndPoints.SONG + "/" + song.id, {lyrics: result.lyrics})
+      .pipe(
+        map( () => {
+          this.snackBar.openSnackbar("La canción se guardó correctamente");
+          song.lyrics = result.lyrics;
+          return song;
+        }),
+        catchError(
+          (error) => {
+            this.snackBar.openErrorSnackbar(error ?? "No se pudo actualizar la canción")
+            throw new Error(error);
+          }
+        )
+      )
+    )
   }
 
 }

@@ -20,7 +20,7 @@ const routes: Routes= [
     ]},
   { path: 'login', component: LogInComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', redirectTo:'song', pathMatch: 'full' },
+  { path: '**', redirectTo:'song', pathMatch: 'full' },
 ];
 
 @NgModule({
