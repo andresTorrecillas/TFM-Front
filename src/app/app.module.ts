@@ -30,6 +30,7 @@ import {ConcertListComponent} from "./concert/concert-list.component";
 import {AddUpdateConcertDialogComponent} from "./concert/add-update-concert-dialog.component";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -44,21 +45,22 @@ import {MatNativeDateModule} from "@angular/material/core";
     ConfirmDialogComponent,
     RegisterComponent
   ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    FormsModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatNativeDateModule,
-    MatDatepickerModule
-  ],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        FormsModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
+        MatProgressSpinnerModule
+    ],
   providers: [
     HttpService,
     SnackbarService,

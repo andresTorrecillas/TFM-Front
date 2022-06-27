@@ -16,13 +16,20 @@ h1{
   margin-bottom: 5px;
 }
 
-.deleteIcon{
+#deleteIcon, #editIcon{
   position: absolute;
   top: 0.7em;
+}
+
+#deleteIcon{
   right: 2vw;
 }
 
-.deleteIcon:hover{
+#editIcon{
+  right: 4vw;
+}
+
+#deleteIcon:hover, #editIcon:hover{
   cursor: pointer;
 }
 

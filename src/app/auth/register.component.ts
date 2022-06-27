@@ -17,6 +17,7 @@ export class RegisterComponent {
   private authService: AuthService;
   private router: Router;
   private snackBar: SnackbarService;
+  spinnerActive: boolean;
 
   constructor(snackBar: SnackbarService, authService: AuthService, router: Router) {
     this.snackBar = snackBar;
@@ -32,13 +33,16 @@ export class RegisterComponent {
     }
     this.clearPassword = "";
     this.passwordValidator = "";
+    this.spinnerActive = false;
   }
 
   sendRegister(){
+    this.spinnerActive = true;
     this.register.password = btoa(this.clearPassword);
     this.authService.register(this.register)
       .subscribe({
         next: redirectUrl => {
+          this.spinnerActive = false;
           redirectUrl = redirectUrl??"/song"
           this.router.navigate([redirectUrl])
             .then(correct => {
@@ -48,11 +52,18 @@ export class RegisterComponent {
             });
         },
         error: err => {
+          this.spinnerActive = false;
           this.snackBar.openSnackbar(err);
           this.register.password = "";
           this.clearPassword = "";
           this.passwordValidator = "";
         }
       })
+  }
+
+  onEnterKeyDown(active: boolean) {
+    if(active){
+      this.sendRegister();
+    }
   }
 }

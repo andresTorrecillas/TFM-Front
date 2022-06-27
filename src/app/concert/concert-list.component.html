@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <h1>Concerts</h1>
+      <h1>Conciertos</h1>
       <button mat-icon-button (click)="openDialog()">
         <mat-icon>playlist_add</mat-icon>
       </button>
@@ -25,7 +25,7 @@
           <div class="col">{{concert.address}}</div>
           <div class="col">{{concert.state}}</div>
           <div class="col">
-            <mat-icon class="deleteIcon" (click)="onDeleteConcert(concert.id)">delete</mat-icon>
+            <mat-icon id="deleteIcon" (click)="onDeleteConcert(concert.id)">delete</mat-icon>
           </div>
         </div>
       </mat-card>

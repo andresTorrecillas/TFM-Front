@@ -13,6 +13,10 @@
 .container{
 }
 
+div.row{
+  padding: 0 16px;
+}
+
 mat-form-field{
   display: inline;
 }
@@ -23,6 +27,12 @@ mat-card-title{
 
 mat-card-footer{
   padding: 5px;
+}
+
+mat-spinner{
+  position: relative;
+  bottom: 30px;
+  margin: auto;
 }
 
 
