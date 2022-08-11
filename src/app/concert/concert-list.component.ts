@@ -7,6 +7,7 @@ import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confir
 import {AddUpdateConcertDialogComponent} from "./add-update-concert-dialog.component";
 import {Concert} from "./concert.model";
 import {DateTime} from "../shared/date-time.model";
+import {AuthService} from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-concert-list',
@@ -19,21 +20,22 @@ export class ConcertListComponent implements OnInit {
   private httpService: HttpService;
   public concertList: Array<Concert>;
   private snackBar: SnackbarService;
+  private authService: AuthService;
 
-  constructor(dialog: MatDialog, httpService: HttpService, snackBar: SnackbarService) {
+  constructor(dialog: MatDialog, httpService: HttpService, snackBar: SnackbarService, authService: AuthService) {
     this.dialog = dialog;
     this.httpService = httpService;
     this.snackBar = snackBar;
     this.concertList = [];
+    this.authService = authService;
   }
 
   ngOnInit() {
-    this.httpService
-      .get(EndPoints.CONCERT)
-      .subscribe({
-        next: (body: Array<Concert>) => {this.concertList = body; this.concertList.forEach(value => value.date = DateTime.copy(value.date));},
-        error: error => this.snackBar.openErrorSnackbar(error)
-      });
+    this.requestConcerts();
+    this.authService.getSelectedBandObservable()
+      .subscribe( () => {
+        this.requestConcerts();
+      })
   }
 
   onDeleteConcert(id: string): void {
@@ -88,5 +90,14 @@ export class ConcertListComponent implements OnInit {
           });
       }
     });
+  }
+
+  private requestConcerts(){
+    this.httpService
+      .get(EndPoints.CONCERT + "?band=" + this.authService.getUserSelectedBand())
+      .subscribe({
+        next: (body: Array<Concert>) => {this.concertList = body; this.concertList.forEach(value => value.date = DateTime.copy(value.date));},
+        error: error => this.snackBar.openErrorSnackbar(error)
+      });
   }
 }

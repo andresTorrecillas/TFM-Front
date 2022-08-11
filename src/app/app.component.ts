@@ -11,7 +11,8 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit{
   title = 'Front-end';
-  bandName: string;
+  bandNames: string[];
+  selectedBand: string;
   logged: boolean;
   private sesStorage: SessionStorageService;
   private bandNameObservable: Observable<any>|null;
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit{
     this.router = router;
     this.bandNameObservable = null;
     this.sesStorage = sesStorage;
-    this.bandName = "";
+    this.bandNames = [];
+    this.selectedBand = '';
     this.logged = false;
   }
 
@@ -31,18 +33,21 @@ export class AppComponent implements OnInit{
     this.logged = this.authService.isLoggedIn();
     this.bandNameObservable = this.sesStorage.getObservable('user', true);
     let user = this.sesStorage.read('user');
-    this.bandName = user !== null ? JSON.parse(user).bandName : "";
+    this.bandNames = user !== null ? JSON.parse(user).bands : [""];
+    this.selectedBand = this.bandNames[0];
+    this.authService.setSelectedBand(this.selectedBand);
     if(this.bandNameObservable !== null){
       this.bandNameObservable.subscribe(
         savedUser => {
           this.logged = this.authService.isLoggedIn();
-          if(savedUser !== ""){
-            this.bandName = JSON.parse(savedUser).bandName;
+          if (savedUser !== "") {
+            this.bandNames = JSON.parse(savedUser).bands;
+            this.selectedBand = this.bandNames[0];
+            this.authService.setSelectedBand(this.selectedBand);
           }
-        }
-      );
+        });
     } else {
-      this.bandName = "BAND"
+      this.bandNames = ["BAND"]
     }
   }
 
@@ -50,5 +55,9 @@ export class AppComponent implements OnInit{
     this.authService.logout();
     this.logged = false;
     this.router.navigate(['/login']).then();
+  }
+
+  changeSelection(){
+    this.authService.setSelectedBand(this.selectedBand);
   }
 }

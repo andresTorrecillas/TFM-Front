@@ -10,6 +10,7 @@ import {AddUpdateSongDialogComponent} from "./song/add-update-song-dialog.compon
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from "@angular/material/button";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpService} from "./shared/services/http.service";
@@ -52,6 +53,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatDialogModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSelectModule,
         MatButtonModule,
         MatCardModule,
         FormsModule,
