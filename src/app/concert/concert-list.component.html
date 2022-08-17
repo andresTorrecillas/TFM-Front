@@ -17,18 +17,21 @@
           <div class="col"></div>
         </div>
       </mat-card>
-      <mat-card *ngFor="let concert of concertList; let i = index" class="individual-element">
-        <div class="row">
-          <a routerLink="{{concert.id}}" class="col-3">{{concert.name}}</a>
-          <div class="col">{{concert.modality}}</div>
-          <div class="col">{{concert.date}}</div>
-          <div class="col">{{concert.address}}</div>
-          <div class="col">{{concert.state}}</div>
-          <div class="col">
-            <mat-icon id="deleteIcon" (click)="onDeleteConcert(concert.id)">delete</mat-icon>
+      <div *ngIf="showList">
+        <mat-card *ngFor="let concert of concertList; let i = index" class="individual-element">
+          <div class="row">
+            <a routerLink="{{concert.id}}" class="col-3">{{concert.name}}</a>
+            <div class="col">{{concert.modality}}</div>
+            <div class="col">{{concert.date}}</div>
+            <div class="col">{{concert.address}}</div>
+            <div class="col">{{concert.state}}</div>
+            <div class="col">
+              <mat-icon id="deleteIcon" (click)="onDeleteConcert(concert.id)">delete</mat-icon>
+            </div>
           </div>
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
+      <mat-spinner *ngIf="!showList" diameter="50" class="centered-spinner"></mat-spinner>
     </mat-card-content>
   </mat-card>
 </div>

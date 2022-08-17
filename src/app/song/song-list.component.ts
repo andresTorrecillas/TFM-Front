@@ -21,6 +21,7 @@ export class SongListComponent implements OnInit {
   public songList: Array<Song>;
   private authService: AuthService;
   private snackBar: SnackbarService;
+  public showList: boolean;
 
   constructor(dialog:MatDialog, httpService:HttpService, authService:AuthService, snackBar: SnackbarService) {
     this.authService = authService;
@@ -28,6 +29,7 @@ export class SongListComponent implements OnInit {
     this.httpService = httpService;
     this.snackBar = snackBar;
     this.songList = [];
+    this.showList = true;
   }
 
   ngOnInit() {
@@ -140,8 +142,10 @@ export class SongListComponent implements OnInit {
       .get(EndPoints.SONG + '?band=' + this.authService.getUserSelectedBand())
       .subscribe({
         next: (body: Array<Song>) => this.songList = body,
-        error: error => this.snackBar.openErrorSnackbar(error)
+        error: error => this.snackBar.openErrorSnackbar(error),
+        complete: () => this.showList = true
       });
+    this.showList = false;
   }
 
 }

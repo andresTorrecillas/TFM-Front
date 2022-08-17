@@ -21,6 +21,7 @@ export class ConcertListComponent implements OnInit {
   public concertList: Array<Concert>;
   private snackBar: SnackbarService;
   private authService: AuthService;
+  public showList: boolean;
 
   constructor(dialog: MatDialog, httpService: HttpService, snackBar: SnackbarService, authService: AuthService) {
     this.dialog = dialog;
@@ -28,6 +29,7 @@ export class ConcertListComponent implements OnInit {
     this.snackBar = snackBar;
     this.concertList = [];
     this.authService = authService;
+    this.showList = true;
   }
 
   ngOnInit() {
@@ -96,8 +98,13 @@ export class ConcertListComponent implements OnInit {
     this.httpService
       .get(EndPoints.CONCERT + "?band=" + this.authService.getUserSelectedBand())
       .subscribe({
-        next: (body: Array<Concert>) => {this.concertList = body; this.concertList.forEach(value => value.date = DateTime.copy(value.date));},
-        error: error => this.snackBar.openErrorSnackbar(error)
+        next: (body: Array<Concert>) => {
+          this.concertList = body;
+          this.concertList.forEach(value => value.date = DateTime.copy(value.date));
+          },
+        error: error => this.snackBar.openErrorSnackbar(error),
+        complete: () => this.showList = true
       });
+    this.showList = false;
   }
 }
