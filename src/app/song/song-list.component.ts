@@ -7,6 +7,7 @@ import {AddUpdateSongDialogComponent} from "./add-update-song-dialog.component";
 import {ConfirmDialogComponent} from "../shared/components/confirm-dialog/confirm-dialog.component";
 import {SnackbarService} from "../shared/services/snackbar.service";
 import {catchError, firstValueFrom, map} from "rxjs";
+import {AuthService} from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-song-list',
@@ -18,22 +19,25 @@ export class SongListComponent implements OnInit {
   public dialog: MatDialog;
   private httpService: HttpService;
   public songList: Array<Song>;
+  private authService: AuthService;
   private snackBar: SnackbarService;
+  public showList: boolean;
 
-  constructor(dialog:MatDialog, httpService:HttpService, snackBar: SnackbarService) {
+  constructor(dialog:MatDialog, httpService:HttpService, authService:AuthService, snackBar: SnackbarService) {
+    this.authService = authService;
     this.dialog = dialog;
     this.httpService = httpService;
     this.snackBar = snackBar;
     this.songList = [];
+    this.showList = true;
   }
 
   ngOnInit() {
-    this.httpService
-      .get(EndPoints.SONG)
-      .subscribe({
-        next: (body: Array<Song>) => this.songList = body,
-        error: error => this.snackBar.openErrorSnackbar(error)
-      });
+    this.requestSongs();
+    this.authService.getSelectedBandObservable()
+      .subscribe( () => {
+      this.requestSongs();
+    })
   }
 
   onDeleteSong(id: string): void{
@@ -131,6 +135,17 @@ export class SongListComponent implements OnInit {
         )
       )
     )
+  }
+
+  private requestSongs(){
+    this.httpService
+      .get(EndPoints.SONG + '?band=' + this.authService.getUserSelectedBand())
+      .subscribe({
+        next: (body: Array<Song>) => this.songList = body,
+        error: error => this.snackBar.openErrorSnackbar(error),
+        complete: () => this.showList = true
+      });
+    this.showList = false;
   }
 
 }

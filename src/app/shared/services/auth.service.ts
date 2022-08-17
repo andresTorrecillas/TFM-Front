@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {map, mergeMap, Observable} from "rxjs";
+import {map, mergeMap, Observable, Subject} from "rxjs";
 import {AuthObject} from "../../auth/authObject.model";
 import {EndPoints} from "../end-points";
 import {HttpService} from "./http.service";
@@ -17,12 +17,16 @@ export class AuthService {
   public redirectUrl: string|null;
   private http: HttpService;
   private sesService: SessionStorageService;
+  private selectedBand: string;
+  private selectedBandSubscriber: Subject<string>;
 
   constructor(http: HttpService, sesService: SessionStorageService) {
     this.http = http;
     this.sesService = sesService;
     this.isLogged = false;
     this.redirectUrl = null;
+    this.selectedBand = '';
+    this.selectedBandSubscriber = new Subject<string>();
   }
 
   login(body: LoginDto): Observable<void>{
@@ -63,6 +67,19 @@ export class AuthService {
     }
     this.isLogged = parseInt(authObj.expirationDate) > Date.now();
     return this.isLogged;
+  }
+
+  public getUserSelectedBand(){
+    return this.selectedBand;
+  }
+
+  public setSelectedBand(selectedBand: string) {
+    this.selectedBand = selectedBand;
+    this.selectedBandSubscriber.next(selectedBand);
+  }
+
+  public getSelectedBandObservable(): Observable<string>{
+    return this.selectedBandSubscriber.asObservable();
   }
 
   public static decodeJWT(token: string): DecodedJwt|null{

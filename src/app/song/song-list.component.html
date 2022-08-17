@@ -6,12 +6,13 @@
         <mat-icon>playlist_add</mat-icon>
       </button>
     </mat-card-header>
-    <mat-card-content class="element-content">
+    <mat-card-content *ngIf="showList" class="element-content">
       <mat-card *ngFor="let song of songList; let i = index" class="individual-element">
         <a routerLink="{{song.id}}">{{song.title}}</a>
         <mat-icon id="deleteIcon" (click)="onDeleteSong(song.id)">delete</mat-icon>
         <mat-icon id="editIcon" (click)="openUpdateDialog(song.id)">edit</mat-icon>
       </mat-card>
     </mat-card-content>
+    <mat-spinner *ngIf="!showList" diameter="50" class="centered-spinner"></mat-spinner>
   </mat-card>
 </div>
