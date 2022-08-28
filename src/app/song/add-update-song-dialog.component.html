@@ -4,12 +4,18 @@
     <mat-label>T&iacute;tulo</mat-label>
     <input matInput required [(ngModel)]="song.title" [disabled]="update" #title="ngModel">
   </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Bandas</mat-label>
+    <mat-select [(ngModel)]="song.bands" multiple>
+      <mat-option *ngFor="let band of bands" [value]="band">{{band}}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field appearance="fill" id="textarea-wrapper">
     <mat-label>Lyrics</mat-label>
-    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="15" pattern="^[\da-zA-ZÁ-ÿ\040\-\n.,\'¿?¡!]+$" [(ngModel)]="song.lyrics" #lyrics="ngModel"></textarea>
+    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="10" pattern="^[\da-zA-ZÁ-ÿ\040\-\n.,\'¿?¡!]+$" [(ngModel)]="song.lyrics" #lyrics="ngModel"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onClose()">Cancelar</button>
   <button mat-button [mat-dialog-close]="song" [disabled]="title.invalid || lyrics.invalid">{{update?"Editar":"A&ntilde;adir"}}</button>
 </div>

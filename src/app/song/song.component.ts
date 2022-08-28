@@ -28,7 +28,7 @@ export class SongComponent implements OnInit {
     this.dialog = dialog;
     this.route = route;
     this.snackBar = snackBarService;
-    this.song = {id:"", title:"", lyrics:""};
+    this.song = {id:"", title:"", lyrics:"", bands:[]};
     this.httpService = httpService;
   }
 

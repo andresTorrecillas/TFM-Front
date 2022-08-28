@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Concert} from "./concert.model";
 import {DateTime} from "../shared/date-time.model";
+import {AuthService} from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-add-song-dialog',
@@ -13,9 +14,11 @@ export class AddUpdateConcertDialogComponent implements OnInit{
   update: boolean;
   concert: Concert;
   dateString: string;
+  private authService: AuthService;
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: {update: boolean, concert: Concert}, dialogRef: MatDialogRef<AddUpdateConcertDialogComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: {update: boolean, concert: Concert}, dialogRef: MatDialogRef<AddUpdateConcertDialogComponent>, authService: AuthService) {
     this.dialogRef = dialogRef;
+    this.authService = authService;
     this.update = data.update;
     this.dateString = "";
     if(this.update){
@@ -23,6 +26,7 @@ export class AddUpdateConcertDialogComponent implements OnInit{
         id: data.concert.id,
         modality: data.concert.modality,
         name: data.concert.name,
+        band: data.concert.band,
         address: data.concert.address,
         color: data.concert.color,
         state: data.concert.state,
@@ -36,7 +40,8 @@ export class AddUpdateConcertDialogComponent implements OnInit{
         date: new DateTime(),
         id: "",
         modality: "",
-        name: ""
+        name: "",
+        band: this.authService.getUserSelectedBand()
       }
     }
   }

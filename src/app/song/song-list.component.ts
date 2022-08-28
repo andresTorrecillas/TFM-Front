@@ -77,17 +77,19 @@ export class SongListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.httpService.post(EndPoints.SONG, result)
-        .subscribe({
-          next: receivedSong => {
-            this.snackBar.openSnackbar("La canción se guardó correctamente");
-            result.id = receivedSong.id;
-            this.songList.push(result);
-          },
-          error: error => {
-            this.snackBar.openErrorSnackbar(error);
-          }
-        });
+      if(result !== undefined){
+        this.httpService.post(EndPoints.SONG, result)
+          .subscribe({
+            next: receivedSong => {
+              this.snackBar.openSnackbar("La canción se guardó correctamente");
+              result.id = receivedSong.id;
+              this.songList.push(result);
+            },
+            error: error => {
+              this.snackBar.openErrorSnackbar(error);
+            }
+          });
+      }
     });
   }
 
