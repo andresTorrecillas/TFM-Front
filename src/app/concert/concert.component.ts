@@ -39,7 +39,8 @@ export class ConcertComponent implements OnInit {
       date: new DateTime(),
       id: "",
       modality: "",
-      name: ""
+      name: "",
+      band: ""
     }
   }
 
@@ -77,6 +78,6 @@ export class ConcertComponent implements OnInit {
   }
 
   openEditDialog() {
-
   }
+
 }
