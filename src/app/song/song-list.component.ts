@@ -122,7 +122,13 @@ export class SongListComponent implements OnInit {
   }
 
   updateSong(song: Song, result: Song): Promise<Song>{
-    return firstValueFrom(this.httpService.patch(EndPoints.SONG + "/" + song.id, {lyrics: result.lyrics})
+    interface songDTO {[key: string]: string|string[]}
+    let data: songDTO = {};
+    data["lyrics"] = result.lyrics
+    if(!song.bands.every((value, index) => value === result.bands[index])){
+      data["bands"] = result.bands;
+    }
+    return firstValueFrom(this.httpService.patch(EndPoints.SONG + "/" + song.id, data)
       .pipe(
         map( () => {
           this.snackBar.openSnackbar("La canción se guardó correctamente");
