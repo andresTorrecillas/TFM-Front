@@ -9,12 +9,15 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul *ngIf="logged" class="navbar-nav">
+    <ul id="sectionsMenu" *ngIf="logged" class="navbar-nav">
+      <li *ngIf="logged" class="nav-item">
+        <a class="nav-link" routerLink="home">Home <mat-icon> home </mat-icon></a>
+      </li>
       <li class="nav-item active">
-        <a class="nav-link" routerLink="song">Canciones</a>
+        <a class="nav-link" routerLink="song">Canciones <mat-icon> library_music </mat-icon></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="concert">Conciertos</a>
+        <a class="nav-link" routerLink="concert">Conciertos <mat-icon> event </mat-icon></a>
       </li>
     </ul>
     <ul id="user-menu" class="navbar-nav">
@@ -24,6 +27,7 @@
       <li *ngIf="!logged" class="nav-item">
         <a class="nav-link" routerLink="login">Log-in</a>
       </li>
+
       <li *ngIf="logged" class="nav-item">
         <a class="nav-link clickable" (click)="logOut()">Log-out</a>
       </li>
