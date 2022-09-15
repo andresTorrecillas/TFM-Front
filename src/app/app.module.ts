@@ -32,9 +32,13 @@ import {AddUpdateConcertDialogComponent} from "./concert/add-update-concert-dial
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {HomeComponent} from "./home/home.component";
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
+    HomeComponent,
     AppComponent,
     ConcertComponent,
     ConcertListComponent,
@@ -61,7 +65,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatSnackBarModule,
         MatNativeDateModule,
         MatDatepickerModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        MatTabsModule
     ],
   providers: [
     HttpService,

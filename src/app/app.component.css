@@ -17,3 +17,14 @@
 .brand-select{
   width: auto;
 }
+
+a mat-icon{
+  color: black;
+  position: relative;
+  top: 6px;
+}
+
+#sectionsMenu{
+  position: relative;
+  bottom: 5px;
+}

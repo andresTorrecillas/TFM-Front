@@ -1,0 +1,46 @@
+<div class="container">
+  <mat-card>
+    <div id="bandsCarousel" class="carousel carousel-dark slide" data-bs-interval="false">
+      <div class="carousel-inner">
+        <div *ngFor="let band of bands; first as isFirst" class="carousel-item" [class.active]="isFirst">
+          <h1>{{band}}</h1>
+          <mat-tab-group>
+            <mat-tab label="Songs">
+              <div class="list-group">
+                <a [routerLink]="['/song', song.id]" *ngFor="let song of bandsInfo[band].songs" class="list-group-item list-group-item-action">{{song.title}}</a>
+              </div>
+            </mat-tab>
+            <mat-tab label="Concerts">
+              <div class="list-group">
+                <a [routerLink]="['/concert', concert.id]" *ngFor="let concert of bandsInfo[band].concerts" class="list-group-item list-group-item-action">{{concert.name}}</a>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+                <!--          <mat-grid-list cols="2" rowHeight="2:1">-->
+<!--            <mat-grid-tile>-->
+<!--              <div class="list-group">-->
+<!--                <a [routerLink]="['/song', song.id]" *ngFor="let song of bandsInfo[band].songs" class="list-group-item list-group-item-action">{{song.title}}</a>-->
+<!--              </div>-->
+<!--            </mat-grid-tile>-->
+<!--            <mat-grid-tile>-->
+<!--              <div class="list-group">-->
+<!--                <a [routerLink]="['/concert', concert.id]" *ngFor="let concert of bandsInfo[band].concerts" class="list-group-item list-group-item-action">{{concert.name}}</a>-->
+<!--              </div>-->
+<!--            </mat-grid-tile>-->
+<!--          </mat-grid-list>-->
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#bandsCarousel" data-bs-slide="prev" (click)="previousBand()">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#bandsCarousel" data-bs-slide="next" (click)="nextBand()">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </mat-card>
+</div>
+
+
+

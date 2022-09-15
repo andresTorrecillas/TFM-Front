@@ -8,8 +8,10 @@ import {AuthGuard} from "./auth/auth.guard";
 import {RegisterComponent} from "./auth/register.component";
 import {ConcertListComponent} from "./concert/concert-list.component";
 import {ConcertComponent} from "./concert/concert.component";
+import {HomeComponent} from "./home/home.component";
 
 const routes: Routes= [
+  { path: 'home', canActivate: [AuthGuard], component: HomeComponent},
   { path: 'song', canActivate: [AuthGuard], children:[
       { path:'', component: SongListComponent },
       { path:':id', component: SongComponent }
@@ -20,7 +22,7 @@ const routes: Routes= [
     ]},
   { path: 'login', component: LogInComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', redirectTo:'song', pathMatch: 'full' },
+  { path: '**', redirectTo:'home', pathMatch: 'full' },
 ];
 
 @NgModule({
