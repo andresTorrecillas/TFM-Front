@@ -9,4 +9,5 @@ export interface Concert {
   date: DateTime,
   address: string,
   modality: string,
+  [key: string]: string|DateTime
 }

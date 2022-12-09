@@ -38,6 +38,23 @@ export class DateTime {
     return this.getDateObject().toLocaleString('es', {dateStyle:"short", timeStyle:"short"});
   }
 
+  public getDatetimeLocalString(): string{
+    let dateObject = this.getDateObject();
+    let year = dateObject.getFullYear();
+    let month = dateObject.getMonth() + 1;
+    let day = dateObject.getDate();
+    let hours: any = dateObject.getHours();
+    if(hours < 10){
+      hours = "0" + hours;
+    }
+    let minutes: any = dateObject.getMinutes();
+    if(minutes < 10){
+      minutes = "0" + minutes;
+    }
+    let resultString = `${year}-${month}-${day}T${hours}:${minutes}`;
+    return resultString;
+  }
+
   public static GetDateTimeFromString(stringDate: string): DateTime|null{
     let resultDate = null;
     let date = new Date(stringDate);

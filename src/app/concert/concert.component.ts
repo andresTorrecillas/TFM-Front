@@ -6,6 +6,8 @@ import {HttpService} from "../shared/services/http.service";
 import {SnackbarService} from "../shared/services/snackbar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import { MatDialog } from '@angular/material/dialog';
+import { AddUpdateConcertDialogComponent } from './add-update-concert-dialog.component';
 
 @Component({
   selector: 'app-concert',
@@ -23,7 +25,9 @@ export class ConcertComponent implements OnInit {
   concert: Concert;
   search: string;
   mapUrl: SafeResourceUrl;
-  constructor(httpService: HttpService, snackBarService: SnackbarService, route: ActivatedRoute, router:Router, sanitizer: DomSanitizer) {
+  dialog: MatDialog;
+  constructor(dialog: MatDialog, httpService: HttpService, snackBarService: SnackbarService, route: ActivatedRoute, router:Router, sanitizer: DomSanitizer) {
+    this.dialog = dialog;
     this.router = router;
     this.httpService = httpService;
     this.snackBar = snackBarService;
@@ -77,7 +81,28 @@ export class ConcertComponent implements OnInit {
     )
   }
 
-  openEditDialog() {
+  openEditDialog(): void{
+    const dialogRef = this.dialog.open(AddUpdateConcertDialogComponent, {
+      width: '40vw',
+      height: '80vh',
+      data: {
+        update: true,
+        concert: this.concert
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined) {
+        this.httpService.patch(EndPoints.CONCERT + "/" + this.concert.id, result)
+          .subscribe({
+            next: () => {
+              this.snackBar.openSnackbar("La canción se guardó correctamente");
+              this.concert = result;
+            },
+            error: error => this.snackBar.openErrorSnackbar(error ?? "No se pudo actualizar la canción")
+          });
+      }
+    });
   }
 
 }

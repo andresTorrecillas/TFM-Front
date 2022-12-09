@@ -32,6 +32,7 @@ export class AddUpdateConcertDialogComponent implements OnInit{
         state: data.concert.state,
         date: data.concert.date
       };
+      this.dateString = this.concert.date.getDatetimeLocalString();
     } else {
       this.concert = {
         address: "",
