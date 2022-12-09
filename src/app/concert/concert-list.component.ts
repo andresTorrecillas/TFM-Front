@@ -8,6 +8,7 @@ import {AddUpdateConcertDialogComponent} from "./add-update-concert-dialog.compo
 import {Concert} from "./concert.model";
 import {DateTime} from "../shared/date-time.model";
 import {AuthService} from "../shared/services/auth.service";
+import { catchError, firstValueFrom, map } from 'rxjs';
 
 @Component({
   selector: 'app-concert-list',
@@ -73,7 +74,7 @@ export class ConcertListComponent implements OnInit {
       height: '80vh',
       data: {
         update: false,
-        song: null
+        concert: null
       }
     });
 
@@ -92,6 +93,52 @@ export class ConcertListComponent implements OnInit {
           });
       }
     });
+  }
+
+  openUpdateDialog(id: string): void{
+    if(id == ""){
+      throw new Error('El identificador tiene que estar indicado si se va a modificar la canción');
+    }
+    let concert: any = this.concertList.find(value => value.id == id);
+    if(concert === undefined){
+      throw new Error('No hay ningún concierto con el identificador indicado');
+    }
+    const dialogRef = this.dialog.open(AddUpdateConcertDialogComponent, {
+      width: '40vw',
+      height: '80vh',
+      data: {
+        update: true,
+        concert: concert
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined) {
+        this.updateConcert(concert, result)
+          .then(value => {
+            this.concertList.splice(this.concertList.indexOf(concert), 1, value);
+          })
+          .catch();
+      }
+    });
+  }
+
+  updateConcert(original: Concert, modified: Concert): Promise<Concert>{
+    modified.id = original.id;
+    return firstValueFrom(this.httpService.patch(EndPoints.CONCERT + "/" + original.id, modified)
+      .pipe(
+        map( () => {
+          this.snackBar.openSnackbar("La canción se guardó correctamente");
+          return modified;
+        }),
+        catchError(
+          (error) => {
+            this.snackBar.openErrorSnackbar(error ?? "No se pudo actualizar la canción")
+            throw new Error(error);
+          }
+        )
+      )
+    )
   }
 
   private requestConcerts(){
